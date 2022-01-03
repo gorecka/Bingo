@@ -1,23 +1,22 @@
 package giver;
 
-import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-public class WaitForPublishingOffer extends Behaviour {
+public class WaitForListOfPublishedOffers  extends Behaviour {
     boolean isDone = false;
     GiverAgent giver;
 
-    WaitForPublishingOffer(GiverAgent agent) {
+    WaitForListOfPublishedOffers(GiverAgent agent) {
         giver = agent;
     }
 
     @Override
     public void action() {
         // czekanie na wiadomość pasującą do wzorca
-        MessageTemplate mtOntology = MessageTemplate.MatchOntology("Publishing-offer-ontology");
-        MessageTemplate mtPerformativeAgree = MessageTemplate.MatchPerformative(ACLMessage.AGREE);
+        MessageTemplate mtOntology = MessageTemplate.MatchOntology("Getting-published-offers-ontology");
+        MessageTemplate mtPerformativeAgree = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
         MessageTemplate mtPerformativeRefuse = MessageTemplate.MatchPerformative(ACLMessage.REFUSE);
         MessageTemplate mtPerformative = MessageTemplate.or(mtPerformativeAgree, mtPerformativeRefuse);
         MessageTemplate mt = MessageTemplate.and(mtPerformative, mtOntology);
@@ -27,10 +26,10 @@ public class WaitForPublishingOffer extends Behaviour {
             System.out.println("Agent " + giver.getAID().getName() + " otrzymal wiadomość ");
             System.out.println("Treść wiadomości: " + message.getContent());
             int performative = message.getPerformative();
-            if (performative == ACLMessage.AGREE) {
-                System.out.println("Oferta została opublikowana");
+            if (performative == ACLMessage.INFORM) {
+                System.out.println("Otrzymano listę opublikowanych ofert (lista może być pusta)");
             } else if (performative == ACLMessage.REFUSE) {
-                System.out.println("Oferta nie została opublikowana");
+                System.out.println("Wystąpił błąd w wyniku którego nie udało się pobrać listy opublikowanych ofert");
             }
             isDone = true;
         } else {

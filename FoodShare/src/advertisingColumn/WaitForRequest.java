@@ -1,5 +1,6 @@
 package advertisingColumn;
 
+import giver.RequestPublishedOffers;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -27,8 +28,10 @@ public class WaitForRequest extends CyclicBehaviour {
             String ontology = message.getOntology();
 
             // decyzja co powinien zrobić słup ogłoszeniowy
-            if (ontology == "Publishing-offer-ontology") {
+            if (ontology.equals("Publishing-offer-ontology")) {
                 advertisingColumn.addBehaviour(new PublishOffer(advertisingColumn, message));
+            } else if (ontology.equals("Getting-published-offers-ontology")){
+                advertisingColumn.addBehaviour(new GetPublishedOffers(advertisingColumn, message));
             }
 
         } else {
