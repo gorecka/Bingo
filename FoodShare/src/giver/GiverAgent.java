@@ -6,7 +6,8 @@ public class GiverAgent extends Agent {
     protected void setup() {
         System.out.println("Cześć, tu " + getAID().getName() + " !");
 //        addBehaviour(new SendOffer(this));
-        addBehaviour(new RequestPublishedOffers(this));
+//        addBehaviour(new RequestPublishedOffers(this));
+        addBehaviour(new RequestPossibleReceivers(this));
     }
 
     protected void takeDown() {

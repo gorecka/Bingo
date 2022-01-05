@@ -4,18 +4,17 @@ import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-public class WaitForListOfPublishedOffers extends Behaviour {
+public class WaitForListOfPossibleReceivers extends Behaviour {
     boolean isDone = false;
     GiverAgent giver;
 
-    WaitForListOfPublishedOffers(GiverAgent agent) {
+    WaitForListOfPossibleReceivers(GiverAgent agent) {
         giver = agent;
     }
-
     @Override
     public void action() {
         // czekanie na wiadomość pasującą do wzorca
-        MessageTemplate mtOntology = MessageTemplate.MatchOntology("Getting-published-offers-ontology");
+        MessageTemplate mtOntology = MessageTemplate.MatchOntology("Getting-possible-receivers-ontology");
         MessageTemplate mtPerformativeAgree = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
         MessageTemplate mtPerformativeRefuse = MessageTemplate.MatchPerformative(ACLMessage.REFUSE);
         MessageTemplate mtPerformative = MessageTemplate.or(mtPerformativeAgree, mtPerformativeRefuse);
@@ -27,9 +26,9 @@ public class WaitForListOfPublishedOffers extends Behaviour {
             System.out.println("Treść wiadomości: " + message.getContent());
             int performative = message.getPerformative();
             if (performative == ACLMessage.INFORM) {
-                System.out.println("Otrzymano listę opublikowanych ofert (lista może być pusta)");
+                System.out.println("Otrzymano listę chętnych (lista może być pusta)");
             } else if (performative == ACLMessage.REFUSE) {
-                System.out.println("Wystąpił błąd w wyniku którego nie udało się pobrać listy opublikowanych ofert");
+                System.out.println("Wystąpił błąd w wyniku którego nie udało się pobrać listy chętnych");
             }
             isDone = true;
         } else {
