@@ -4,11 +4,11 @@ import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 
-public class GetPublishedOffers extends OneShotBehaviour {
+public class GetMyPublishedOffers extends OneShotBehaviour {
     AdvertisingColumnAgent advertisingColumn;
     ACLMessage message;
 
-    GetPublishedOffers(AdvertisingColumnAgent agent, ACLMessage msg) {
+    GetMyPublishedOffers(AdvertisingColumnAgent agent, ACLMessage msg) {
         advertisingColumn = agent;
         message = msg;
     }

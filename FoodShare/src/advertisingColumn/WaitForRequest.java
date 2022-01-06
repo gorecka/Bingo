@@ -1,5 +1,6 @@
 package advertisingColumn;
 
+import communicationConstants.OntologyNames;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -26,13 +27,13 @@ public class WaitForRequest extends CyclicBehaviour {
             String ontology = message.getOntology();
 
             // decyzja co powinien zrobić słup ogłoszeniowy
-            if (ontology.equals("Publishing-offer-ontology")) {
+            if (ontology.equals(OntologyNames.PUBLISHING_OFFER_ONTOLOGY)) {
                 advertisingColumn.addBehaviour(new PublishOffer(advertisingColumn, message));
-            } else if (ontology.equals("Getting-published-offers-ontology")){
-                advertisingColumn.addBehaviour(new GetPublishedOffers(advertisingColumn, message));
-            } else if (ontology.equals("Getting-possible-receivers-ontology")){
+            } else if (ontology.equals(OntologyNames.GETTING_MY_PUBLISHED_OFFERS_ONTOLOGY)){
+                advertisingColumn.addBehaviour(new GetMyPublishedOffers(advertisingColumn, message));
+            } else if (ontology.equals(OntologyNames.GETTING_POSSIBLE_RECEIVERS_ONTOLOGY)){
                 advertisingColumn.addBehaviour(new GetPossibleReceivers(advertisingColumn, message));
-            } else if (ontology.equals("Resignation-ontology")) {
+            } else if (ontology.equals(OntologyNames.RESIGNATION_ONTOLOGY)) {
                 advertisingColumn.addBehaviour(new ProcessResignation(advertisingColumn, message));
             }
 

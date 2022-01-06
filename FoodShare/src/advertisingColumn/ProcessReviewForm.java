@@ -1,7 +1,7 @@
 package advertisingColumn;
 
+import communicationConstants.OntologyNames;
 import jade.core.AID;
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import org.json.JSONObject;
@@ -47,7 +47,7 @@ public class ProcessReviewForm extends OneShotBehaviour {
 
         reply = new ACLMessage(ACLMessage.INFORM);
         reply.setContent(replyContent);
-        reply.setOntology("Reviewing-form-ontology");
+        reply.setOntology(OntologyNames.REVIEWING_FORM_ONTOLOGY);
         reply.addReceiver(giver);
         advertisingColumn.send(reply);
     }

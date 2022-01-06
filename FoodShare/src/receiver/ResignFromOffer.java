@@ -1,7 +1,7 @@
 package receiver;
 
+import communicationConstants.OntologyNames;
 import jade.core.AID;
-import jade.core.NodeDescriptor;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import org.json.JSONObject;
@@ -26,7 +26,7 @@ public class ResignFromOffer extends OneShotBehaviour {
         content = json.toString();
 
         message = new ACLMessage(ACLMessage.REQUEST);
-        message.setOntology("Resignation-ontology");
+        message.setOntology(OntologyNames.RESIGNATION_ONTOLOGY);
         message.setContent(content);
         message.addReceiver(new AID("Slup", AID.ISLOCALNAME));
         System.out.println(receiver.getAID().getName() + " zaraz wysle rezygnacje z oferty do slupa");

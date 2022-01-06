@@ -1,6 +1,6 @@
 package giver;
 
-import jade.core.AID;
+import communicationConstants.OntologyNames;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -16,7 +16,7 @@ public class WaitForPublishingOffer extends Behaviour {
     @Override
     public void action() {
         // czekanie na wiadomość pasującą do wzorca
-        MessageTemplate mtOntology = MessageTemplate.MatchOntology("Publishing-offer-ontology");
+        MessageTemplate mtOntology = MessageTemplate.MatchOntology(OntologyNames.PUBLISHING_OFFER_ONTOLOGY);
         MessageTemplate mtPerformativeAgree = MessageTemplate.MatchPerformative(ACLMessage.AGREE);
         MessageTemplate mtPerformativeRefuse = MessageTemplate.MatchPerformative(ACLMessage.REFUSE);
         MessageTemplate mtPerformative = MessageTemplate.or(mtPerformativeAgree, mtPerformativeRefuse);

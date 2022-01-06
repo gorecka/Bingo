@@ -1,14 +1,13 @@
 package advertisingColumn;
 
+import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
-import org.json.*;
+import org.json.JSONObject;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class SendReviewForm extends OneShotBehaviour {
     AdvertisingColumnAgent advertisingColumn;
@@ -39,7 +38,7 @@ public class SendReviewForm extends OneShotBehaviour {
         // przygotowanie ankiety i wysłanie do obiorcy jedzenia
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
         msg.addReceiver(receiverName);
-        msg.setOntology("Reviewing-form-ontology");
+        msg.setOntology(OntologyNames.REVIEWING_FORM_ONTOLOGY);
         msg.setContent(content);
         advertisingColumn.send(msg);
 

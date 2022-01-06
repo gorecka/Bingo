@@ -1,5 +1,6 @@
 package giver;
 
+import communicationConstants.OntologyNames;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -14,7 +15,7 @@ public class WaitForListOfPossibleReceivers extends Behaviour {
     @Override
     public void action() {
         // czekanie na wiadomość pasującą do wzorca
-        MessageTemplate mtOntology = MessageTemplate.MatchOntology("Getting-possible-receivers-ontology");
+        MessageTemplate mtOntology = MessageTemplate.MatchOntology(OntologyNames.GETTING_POSSIBLE_RECEIVERS_ONTOLOGY);
         MessageTemplate mtPerformativeAgree = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
         MessageTemplate mtPerformativeRefuse = MessageTemplate.MatchPerformative(ACLMessage.REFUSE);
         MessageTemplate mtPerformative = MessageTemplate.or(mtPerformativeAgree, mtPerformativeRefuse);

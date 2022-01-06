@@ -1,6 +1,6 @@
 package receiver;
 
-import jade.core.AID;
+import communicationConstants.OntologyNames;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -18,7 +18,7 @@ public class WaitForReviewForm extends CyclicBehaviour {
 
         // czekanie na wiadomość, która pasuje do wzorca
         MessageTemplate mtPerformative = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
-        MessageTemplate mtOntology = MessageTemplate.MatchOntology("Reviewing-form-ontology");
+        MessageTemplate mtOntology = MessageTemplate.MatchOntology(OntologyNames.REVIEWING_FORM_ONTOLOGY);
         MessageTemplate mt = MessageTemplate.and(mtPerformative, mtOntology);
         ACLMessage message = receiver.receive(mt);
 

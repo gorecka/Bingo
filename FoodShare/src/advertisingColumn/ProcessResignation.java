@@ -1,5 +1,6 @@
 package advertisingColumn;
 
+import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -34,7 +35,7 @@ public class ProcessResignation extends OneShotBehaviour {
             notifyGiver = new ACLMessage(ACLMessage.INFORM);
             notifyGiver.setContent(notification);
             notifyGiver.addReceiver(giver);
-            notifyGiver.setOntology("Resignation-ontology");
+            notifyGiver.setOntology(OntologyNames.RESIGNATION_ONTOLOGY);
             advertisingColumn.send(notifyGiver);
 
         }
@@ -51,7 +52,7 @@ public class ProcessResignation extends OneShotBehaviour {
         content = conf.toString();
 
         confirmation = new ACLMessage(ACLMessage.AGREE);
-        confirmation.setOntology("Resignation-ontology");
+        confirmation.setOntology(OntologyNames.RESIGNATION_ONTOLOGY);
         confirmation.setContent(content);
         confirmation.addReceiver(message.getSender());
 
