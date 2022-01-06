@@ -1,12 +1,10 @@
 package advertisingColumn;
 
-import giver.RequestPublishedOffers;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 public class WaitForRequest extends CyclicBehaviour {
-
     AdvertisingColumnAgent advertisingColumn;
 
     WaitForRequest(AdvertisingColumnAgent agent) {
@@ -34,6 +32,8 @@ public class WaitForRequest extends CyclicBehaviour {
                 advertisingColumn.addBehaviour(new GetPublishedOffers(advertisingColumn, message));
             } else if (ontology.equals("Getting-possible-receivers-ontology")){
                 advertisingColumn.addBehaviour(new GetPossibleReceivers(advertisingColumn, message));
+            } else if (ontology.equals("Resignation-ontology")) {
+                advertisingColumn.addBehaviour(new ProcessResignation(advertisingColumn, message));
             }
 
         } else {
