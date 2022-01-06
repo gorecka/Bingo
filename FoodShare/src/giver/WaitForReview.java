@@ -35,7 +35,7 @@ public class WaitForReview extends CyclicBehaviour {
             System.out.println("Agent " + giver.getAID().getName() + " ma srednia ocen " + avg + " i stan jego blokady to " + isBlocked);
 
         } else {
-            System.out.println("Agent " + giver.getAID().getName() + " nie dostal wiadomosci - blokada");
+            System.out.println("Agent " + giver.getAID().getName() + " nie dostal ankiety - blokada");
             block();
         }
     }

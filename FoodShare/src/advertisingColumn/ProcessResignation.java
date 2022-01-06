@@ -21,7 +21,7 @@ public class ProcessResignation extends OneShotBehaviour {
         // sprawdzenie, czy wybrany do oferty i kto wystawia
         //TODO
         boolean isChose = true;
-        AID giver = new AID("Wystawiajacy");
+        AID giver = new AID("W1", AID.ISLOCALNAME);
 
         JSONObject json = new JSONObject(message.getContent());
         if(isChose) {

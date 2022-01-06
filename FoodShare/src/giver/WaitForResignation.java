@@ -8,6 +8,10 @@ import jade.lang.acl.MessageTemplate;
 public class WaitForResignation extends CyclicBehaviour {
     GiverAgent giver;
 
+    WaitForResignation(GiverAgent agent) {
+        giver = agent;
+    }
+
     @Override
     public void action() {
         // czekanie na wiadomość pasującą do wzorca

@@ -23,9 +23,11 @@ public class ProcessReviewForm extends OneShotBehaviour {
         double avg = 3.8;
         int numberOfReviews = 5;
 
+        System.out.println("Dostalem ankiete i zaczynam przetwarzac");
         String content = message.getContent();
         JSONObject obj = new JSONObject(content);
         AID giver = new AID(obj.getString("giver"));
+        System.out.println("Wysle ankiete do " + giver);
         double score = Double.parseDouble(obj.getString("review"));
         // wyliczenie sredniej oceny
         avg = ((avg * numberOfReviews) + score)/++numberOfReviews;
@@ -34,7 +36,7 @@ public class ProcessReviewForm extends OneShotBehaviour {
         //zapisanie nowej sredniej
         //TODO
 
-
+        System.out.println("Ocena: " + avg + " Czy blokada? "  + isBlocked);
         //wyslanie informacji o nowej ocenie i potencjalnej blokadzie
         ACLMessage reply;
         String replyContent;
@@ -49,6 +51,7 @@ public class ProcessReviewForm extends OneShotBehaviour {
         reply.setContent(replyContent);
         reply.setOntology(OntologyNames.REVIEWING_FORM_ONTOLOGY);
         reply.addReceiver(giver);
+        System.out.println(reply.getAllReceiver().next().toString() + " moj odbiorca ankiety");
         advertisingColumn.send(reply);
     }
 

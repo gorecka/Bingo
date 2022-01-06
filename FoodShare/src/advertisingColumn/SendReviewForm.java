@@ -12,10 +12,10 @@ import java.time.format.DateTimeFormatter;
 public class SendReviewForm extends OneShotBehaviour {
     AdvertisingColumnAgent advertisingColumn;
     AID receiverName;
-    AID giverName;
+    String giverName;
     String offerName;
 
-    SendReviewForm(AdvertisingColumnAgent agent, AID receiver, AID giver, String offer){
+    SendReviewForm(AdvertisingColumnAgent agent, AID receiver, String giver, String offer){
         advertisingColumn = agent;
         receiverName = receiver;
         giverName = giver;
@@ -43,7 +43,7 @@ public class SendReviewForm extends OneShotBehaviour {
         advertisingColumn.send(msg);
 
         // oczekiwanie na odpowiedź
-        advertisingColumn.addBehaviour(new WaitForRequest(advertisingColumn));
+        advertisingColumn.addBehaviour(new WaitForFilledInReview(advertisingColumn));
     }
 }
 
