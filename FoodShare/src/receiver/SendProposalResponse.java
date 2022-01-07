@@ -39,7 +39,6 @@ public class SendProposalResponse extends OneShotBehaviour {
         message.setContent(content);
         message.addReceiver(giverSender);
         receiver.send(message);
-        System.out.println("Agent " + receiver.getAID().getName() + " ************ wysłano odpowiedź na propozycje terminu - ZGODA do: " + giverSender.getName());
 
     }
 }

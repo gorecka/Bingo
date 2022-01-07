@@ -2,19 +2,19 @@ package giver;
 
 import communicationConstants.OntologyNames;
 import jade.core.AID;
-import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import org.json.JSONObject;
 
-public class SendRequestForRemovingReceiver extends Behaviour {
+public class SendRequestForRemovingReceiver extends OneShotBehaviour {
+    String receiver;
     String offerID;
-    AID receiverID;
     GiverAgent giver;
+
     public SendRequestForRemovingReceiver(GiverAgent giver, AID sender, String offerID) {
         this.giver = giver;
-        this.receiverID = sender;
+        this.receiver = sender.getName();
         this.offerID = offerID;
-
     }
 
     @Override
@@ -24,7 +24,7 @@ public class SendRequestForRemovingReceiver extends Behaviour {
         String content;
         JSONObject json = new JSONObject();
         json.put("offerID", offerID);
-        json.put("receiverID", offerID);
+        json.put("receiverName", receiver);
         content = json.toString();
 
         message = new ACLMessage(ACLMessage.REQUEST);
@@ -36,10 +36,5 @@ public class SendRequestForRemovingReceiver extends Behaviour {
         giver.send(message);
 
         giver.addBehaviour(new WaitForReceiverResignationConfirmation(giver));
-    }
-
-    @Override
-    public boolean done() {
-        return false;
     }
 }

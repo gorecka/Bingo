@@ -55,7 +55,7 @@ public class ProcessResignation extends OneShotBehaviour {
         confirmation = new ACLMessage(ACLMessage.AGREE);
         confirmation.setOntology(OntologyNames.RESIGNATION_ONTOLOGY);
         confirmation.setContent(content);
-        confirmation.addReceiver(receiver);
+        confirmation.addReceiver(message.getSender());
 
         advertisingColumn.send(confirmation);
     }
