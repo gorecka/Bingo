@@ -23,6 +23,7 @@ public class ResignFromOffer extends OneShotBehaviour {
         String content;
         JSONObject json = new JSONObject();
         json.put("offerID", offerID);
+        json.put("receiverName", receiver.getName());
         content = json.toString();
 
         message = new ACLMessage(ACLMessage.REQUEST);
