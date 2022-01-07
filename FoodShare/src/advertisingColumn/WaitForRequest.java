@@ -41,6 +41,8 @@ public class WaitForRequest extends CyclicBehaviour {
                 advertisingColumn.addBehaviour(new ProcessEditOffer(advertisingColumn, message));
             } else if (ontology.equals(OntologyNames.DELETING_OFFER_ONTOLOGY)) {
                 advertisingColumn.addBehaviour(new ProcessDeleteOffer(advertisingColumn, message));
+            } else if (ontology.equals(OntologyNames.CONFIRMATION_OF_RECEIPT)) {
+                advertisingColumn.addBehaviour(new CloseOffer(advertisingColumn, message));
             }
 
         } else {
