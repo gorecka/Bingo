@@ -12,4 +12,5 @@ public final class OntologyNames {
     public static final String SIGNING_UP_FOR_OFFER_ONTOLOGY = "Signing-up-for-offer-ontology";
     public static final String CONFIRMATION_OF_RECEIPT = "confirmation-of-receipt-ontology";
     public static final String COLLECTION_DETAILS_ONTOLOGY = "Collection-details-ontology";
+    public static final String OFFER_UPDATE_ONTOLOGY = "offer-update-ontology";
 }

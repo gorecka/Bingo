@@ -37,10 +37,9 @@ public class WaitForRequest extends CyclicBehaviour {
                 advertisingColumn.addBehaviour(new ProcessResignation(advertisingColumn, message));
             } else if (ontology.equals(OntologyNames.GETTING_ALL_PUBLISHED_OFFERS_ONTOLOGY)) {
                 advertisingColumn.addBehaviour(new GetAllPublishedOffers(advertisingColumn, message));
-            } else if (ontology.equals(OntologyNames.EDITING_OFFER_ONTOLOGY)) {
-                advertisingColumn.addBehaviour(new ProcessEditOffer(advertisingColumn, message));
-            } else if (ontology.equals(OntologyNames.DELETING_OFFER_ONTOLOGY)) {
-                advertisingColumn.addBehaviour(new ProcessDeleteOffer(advertisingColumn, message));
+            } else if (ontology.equals(OntologyNames.EDITING_OFFER_ONTOLOGY) ||
+                       ontology.equals(OntologyNames.DELETING_OFFER_ONTOLOGY)) {
+                advertisingColumn.addBehaviour(new ProcessUpdateOffer(advertisingColumn, message));
             } else if (ontology.equals(OntologyNames.CONFIRMATION_OF_RECEIPT)) {
                 advertisingColumn.addBehaviour(new CloseOffer(advertisingColumn, message));
             } else if (ontology.equals(OntologyNames.SIGNING_UP_FOR_OFFER_ONTOLOGY)) {

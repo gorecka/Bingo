@@ -1,15 +1,16 @@
 package advertisingColumn;
 
+import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import org.json.JSONObject;
 
-public class ProcessDeleteOffer extends OneShotBehaviour {
+public class ProcessUpdateOffer extends OneShotBehaviour {
     AdvertisingColumnAgent advertisingColumn;
     ACLMessage message;
 
-    ProcessDeleteOffer(AdvertisingColumnAgent agent, ACLMessage msg)
+    ProcessUpdateOffer(AdvertisingColumnAgent agent, ACLMessage msg)
     {
         advertisingColumn = agent;
         message = msg;
@@ -17,23 +18,29 @@ public class ProcessDeleteOffer extends OneShotBehaviour {
 
     @Override
     public void action() {
-        System.out.println("ProcessDeleteOffer");
         AID giver = message.getSender();
+        System.out.println(advertisingColumn.getAID().getName() + " ProcessUpdateOffer from " + giver.getName());
         JSONObject content = new JSONObject(message.getContent());
 
         ACLMessage reply = message.createReply();
-//        reply.setOntology(OntologyNames.DELETING_OFFER_ONTOLOGY);
-//        reply.addReceiver(giver);
+        JSONObject replyContent = new JSONObject();
+        replyContent.put("offerID", content.get("offerID"));
 
         // sprawdzenie czy nadawca jest autorem oferty
         // TODO
         Boolean isAuthor = true;
 
         if (isAuthor) {
-            System.out.println("Requester is the author, request accepted, deleting offer");
+            System.out.println(advertisingColumn.getAID().getName() + " Requester is the author, request accepted, updating offer");
 
-            // usunięcie oferty
-            // TODO
+            // aktualizacja oferty
+            if (message.getOntology().equals(OntologyNames.EDITING_OFFER_ONTOLOGY)) {
+                // edit the offer
+                // TODO
+            } else if (message.getOntology().equals(OntologyNames.DELETING_OFFER_ONTOLOGY)) {
+                // delete the offer
+                // TODO
+            }
 
             // wysłanie odpowiedzi
             reply.setPerformative(ACLMessage.AGREE);
@@ -44,7 +51,7 @@ public class ProcessDeleteOffer extends OneShotBehaviour {
             // poinformowanie zapisanych odbierających o aktualizacji oferty
             // TODO
         } else {
-            System.out.println("Requester is not the author, request refused");
+            System.out.println(advertisingColumn.getAID().getName() + " Requester is not the author, request refused");
 
             // wysłanie odpowiedzi
             reply.setPerformative(ACLMessage.REFUSE);
