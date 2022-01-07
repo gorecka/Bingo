@@ -37,6 +37,10 @@ public class WaitForRequest extends CyclicBehaviour {
                 advertisingColumn.addBehaviour(new ProcessResignation(advertisingColumn, message));
             } else if (ontology.equals(OntologyNames.GETTING_ALL_PUBLISHED_OFFERS_ONTOLOGY)) {
                 advertisingColumn.addBehaviour(new GetAllPublishedOffers(advertisingColumn, message));
+            } else if (ontology.equals(OntologyNames.SIGNING_UP_FOR_OFFER_ONTOLOGY)) {
+                advertisingColumn.addBehaviour(new ProcessEnrolment(advertisingColumn, message));
+            } else if (ontology.equals(OntologyNames.COLLECTION_DETAILS_ONTOLOGY)) {
+                advertisingColumn.addBehaviour(new ProcessUpdateOfferStatus(advertisingColumn, message));
             }
 
         } else {

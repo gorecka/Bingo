@@ -8,4 +8,5 @@ public final class OntologyNames {
     public static final String GETTING_MY_PUBLISHED_OFFERS_ONTOLOGY = "Getting-my-published-offers-ontology";
     public static final String GETTING_ALL_PUBLISHED_OFFERS_ONTOLOGY = "Getting-all-published-offers-ontology";
     public static final String SIGNING_UP_FOR_OFFER_ONTOLOGY = "Signing-up-for-offer-ontology";
+    public static final String COLLECTION_DETAILS_ONTOLOGY = "Collection-details-ontology";
 }

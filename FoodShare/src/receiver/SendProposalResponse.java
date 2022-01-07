@@ -5,28 +5,41 @@ import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 
-public class SendApproval extends OneShotBehaviour {
+public class SendProposalResponse extends OneShotBehaviour {
 
     ReceiverAgent receiver;
-    AID sender;
+    AID giverSender;
+    boolean ifProposalAccepted;
 
-    public SendApproval(ReceiverAgent agent, AID sender, boolean b) {
+    public SendProposalResponse(ReceiverAgent agent, AID giverAgent, boolean b) {
         receiver = agent;
-        this.sender = sender;
+        this.giverSender = giverAgent;
+        ifProposalAccepted = b;
     }
 
     @Override
     public void action() {
-        System.out.println("Agent " + receiver.getAID().getName() + " wysyłam potwierdzenie terminu");
         // przygotowanie wiadomości
         ACLMessage message;
-        String content = "zgoda";
+        String content;
 
-        message = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
+        if (ifProposalAccepted) {
+            message = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
+            content = "zgoda";
+            System.out.println("Agent " + receiver.getAID().getName() + " wysyłam odpowiedź na propozycje terminu - ZGODA");
+            receiver.addBehaviour(new WaitForReviewForm(receiver));
+        }
+        else {
+            message = new ACLMessage(ACLMessage.REJECT_PROPOSAL);
+            content = "odmowa";
+            System.out.println("Agent " + receiver.getAID().getName() + " wysyłam odpowiedź na propozycje terminu - ODMOWA");
+        }
+
         message.setOntology(OntologyNames.COLLECTION_DETAILS_ONTOLOGY);
         message.setContent(content);
-        message.addReceiver(sender);
-
+        message.addReceiver(giverSender);
         receiver.send(message);
+        System.out.println("Agent " + receiver.getAID().getName() + " ************ wysłano odpowiedź na propozycje terminu - ZGODA do: " + giverSender.getName());
+
     }
 }

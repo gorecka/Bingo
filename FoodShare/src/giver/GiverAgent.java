@@ -1,6 +1,5 @@
 package giver;
 
-import advertisingColumn.WaitForFilledInReview;
 import jade.core.Agent;
 
 public class GiverAgent extends Agent {
@@ -10,6 +9,7 @@ public class GiverAgent extends Agent {
         addBehaviour(new RequestMyPublishedOffers(this));
         addBehaviour(new WaitForReview(this));
         addBehaviour(new WaitForResignation(this));
+        addBehaviour(new RequestPossibleReceivers(this));
 //        addBehaviour(new RequestPossibleReceivers(this));
     }
 

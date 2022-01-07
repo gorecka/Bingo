@@ -26,6 +26,7 @@ public class WaitForAddition extends Behaviour {
             System.out.println("Agent " + receiver.getAID().getName() + " otrzymal potwierdzenie dopisania do oferty ");
             System.out.println("Treść wiadomości: " + message.getContent());
             isDone = true;
+            receiver.addBehaviour(new WaitForProposal(receiver));
         } else {
             System.out.println("Agent " + receiver.getAID().getName() + " nie otrzymal potwierdzenia dopisania do oferty - blokada");
             block();
