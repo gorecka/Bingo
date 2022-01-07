@@ -23,11 +23,12 @@ public class WaitForListOfPossibleReceivers extends Behaviour {
 
         ACLMessage message = myAgent.receive(mt);
         if (message != null) {
-            System.out.println("Agent " + giver.getAID().getName() + " otrzymal wiadomość ");
+            System.out.println("Agent " + giver.getAID().getName() + " otrzymal wiadomość o liście chętnych");
             System.out.println("Treść wiadomości: " + message.getContent());
             int performative = message.getPerformative();
             if (performative == ACLMessage.INFORM) {
                 System.out.println("Otrzymano listę chętnych (lista może być pusta)");
+                giver.addBehaviour(new SendProposal(giver));
             } else if (performative == ACLMessage.REFUSE) {
                 System.out.println("Wystąpił błąd w wyniku którego nie udało się pobrać listy chętnych");
             }

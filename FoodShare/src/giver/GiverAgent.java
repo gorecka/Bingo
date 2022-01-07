@@ -9,6 +9,7 @@ public class GiverAgent extends Agent {
         addBehaviour(new RequestMyPublishedOffers(this));
         addBehaviour(new WaitForReview(this));
         addBehaviour(new WaitForResignation(this));
+        addBehaviour(new RequestPossibleReceivers(this));
 //        addBehaviour(new RequestPossibleReceivers(this));
 //        addBehaviour(new EditOffer(this, "4321"));
 //        addBehaviour(new DeleteOffer(this, "1234"));
