@@ -18,18 +18,19 @@ public class ProcessResignation extends OneShotBehaviour {
 
     @Override
     public void action() {
-        // sprawdzenie, czy wybrany do oferty i kto wystawia
-        //TODO
+        JSONObject json = new JSONObject(message.getContent());
+        AID receiver = new AID(json.getString("receiverName"), AID.ISGUID);
         boolean isChose = true;
         AID giver = new AID("W1", AID.ISLOCALNAME);
 
-        JSONObject json = new JSONObject(message.getContent());
+        // sprawdzenie, czy wybrany do oferty i kto wystawia
+        //TODO
         if(isChose) {
             ACLMessage notifyGiver;
             String notification;
             JSONObject obj = new JSONObject();
 
-            obj.put("receiver", message.getSender());
+            obj.put("receiverName", receiver.getName());
             obj.put("offerID", json.getString("offerID"));
             notification = obj.toString();
             notifyGiver = new ACLMessage(ACLMessage.INFORM);
@@ -54,7 +55,7 @@ public class ProcessResignation extends OneShotBehaviour {
         confirmation = new ACLMessage(ACLMessage.AGREE);
         confirmation.setOntology(OntologyNames.RESIGNATION_ONTOLOGY);
         confirmation.setContent(content);
-        confirmation.addReceiver(message.getSender());
+        confirmation.addReceiver(receiver);
 
         advertisingColumn.send(confirmation);
     }

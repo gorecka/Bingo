@@ -11,6 +11,8 @@ public class GiverAgent extends Agent {
         addBehaviour(new WaitForResignation(this));
         addBehaviour(new RequestPossibleReceivers(this));
 //        addBehaviour(new RequestPossibleReceivers(this));
+//        addBehaviour(new EditOffer(this, "4321"));
+//        addBehaviour(new DeleteOffer(this, "1234"));
     }
 
     protected void takeDown() {
