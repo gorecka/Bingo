@@ -7,12 +7,18 @@ import jade.lang.acl.MessageTemplate;
 
 public class WaitForProposal extends CyclicBehaviour {
     ReceiverAgent receiver;
+    enum ReceiverDecision {
+        OK,
+        RESIGN,
+        CFP
+    }
 
     WaitForProposal(ReceiverAgent agent) {
         receiver = agent;
     }
     boolean proposalAccepted = true;
     boolean ifResignation = true;
+    ReceiverDecision dec = ReceiverDecision.CFP;
 
     @Override
     public void action() {
@@ -28,7 +34,9 @@ public class WaitForProposal extends CyclicBehaviour {
         if (message != null) {
             System.out.println("Agent " + receiver.getAID().getName() + " otrzymal propozycje terminu ");
             message.getSender();
-            receiver.addBehaviour(new SendProposalResponse(receiver, message.getSender(), true));
+
+            //TODO: podjęcie decyzji dotyczącej terminu - wybór wartości zmiennej dec
+            receiver.addBehaviour(new SendProposalResponse(receiver, message.getSender(), dec));
         } else {
             System.out.println("Agent " + receiver.getAID().getName() + " nie dostal propozycji terminu - blokada");
             block();
