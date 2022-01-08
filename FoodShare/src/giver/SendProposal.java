@@ -8,13 +8,18 @@ import jade.lang.acl.ACLMessage;
 public class SendProposal extends OneShotBehaviour {
 
     GiverAgent giver;
+    //TODO
+    AID ChosenReceiverID;
 
     public SendProposal(GiverAgent agent) {
         giver = agent;
+        ChosenReceiverID = new AID("R1", AID.ISLOCALNAME);
+    }
+    public SendProposal(GiverAgent agent, AID chosenReceiverID) {
+        giver = agent;
+        this.ChosenReceiverID = chosenReceiverID;
     }
 
-    //TODO
-    AID ChosenReceiverID = new AID("R1", AID.ISLOCALNAME);
 
     @Override
     public void action() {
