@@ -20,8 +20,12 @@ public class WaitForProposal extends CyclicBehaviour {
     boolean ifResignation = true;
     ReceiverDecision dec = ReceiverDecision.CFP;
 
+    // Agent wysyła CFP 1 raz, następnie zgadza się na propozycję wystawiającego
+    private int CFPCounter = 0;
+
     @Override
     public void action() {
+        if(dec == ReceiverDecision.CFP && CFPCounter == 1) dec = ReceiverDecision.OK;
 
         System.out.println("Agent " + receiver.getAID().getName() + " czekam na propozycje terminu");
 
@@ -37,6 +41,7 @@ public class WaitForProposal extends CyclicBehaviour {
 
             //TODO: podjęcie decyzji dotyczącej terminu - wybór wartości zmiennej dec
             receiver.addBehaviour(new SendProposalResponse(receiver, message.getSender(), dec));
+            ++CFPCounter;
         } else {
             System.out.println("Agent " + receiver.getAID().getName() + " nie dostal propozycji terminu - blokada");
             block();
