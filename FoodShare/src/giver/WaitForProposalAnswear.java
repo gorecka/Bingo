@@ -34,6 +34,8 @@ public class WaitForProposalAnswear extends Behaviour {
         ACLMessage messageReject = giver.receive(mtReject);
         ACLMessage messageCFP = giver.receive(mtCFP);
 
+        boolean refuseCFP = true;
+
         if (messageAccept != null) {
             System.out.println("Agent " + giver.getAID().getName() + " otrzymal akceptację terminu -> wysyłam informacje do słupa ");
             isDone = true;
@@ -44,8 +46,11 @@ public class WaitForProposalAnswear extends Behaviour {
             giver.addBehaviour(new SendRequestForRemovingReceiver(giver, messageReject.getSender(), offerID));
         } else if (messageCFP != null) {
             System.out.println("Agent " + giver.getAID().getName() + " otrzymal CFP - podejmuję decyzję czy kontyuować negocjacje");
+            if (refuseCFP) {
+                giver.addBehaviour(new SendRequestForRemovingReceiver(giver, messageCFP.getSender(), offerID));
+                giver.addBehaviour(new SendResignationToReceiver(giver, messageCFP.getSender(), offerID));
+            } else giver.addBehaviour(new SendProposal(giver, messageCFP.getSender()));
             isDone = true;
-            giver.addBehaviour(new SendProposal(giver, messageCFP.getSender()));
         } else {
             System.out.println("Agent " + giver.getAID().getName() + " nie otrzymał akceptacji terminu - blokada");
             block();
