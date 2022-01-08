@@ -21,23 +21,19 @@ public class SendProposalResponse extends OneShotBehaviour {
     public void action() {
         // przygotowanie wiadomości
         ACLMessage message;
-        String content;
 
         switch (decision) {
             case OK:
                 message = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
-                content = "zgoda";
                 System.out.println("Agent " + receiver.getAID().getName() + " wysyłam odpowiedź na propozycje terminu - ZGODA");
                 receiver.addBehaviour(new WaitForReviewForm(receiver));
                 break;
             case RESIGN:
                 message = new ACLMessage(ACLMessage.REJECT_PROPOSAL);
-                content = "odmowa";
                 System.out.println("Agent " + receiver.getAID().getName() + " wysyłam odpowiedź na propozycje terminu - ODMOWA");
                 break;
             case CFP:
                 message = new ACLMessage(ACLMessage.CFP);
-                content = "prosba o nowy termin";
                 System.out.println("Agent " + receiver.getAID().getName() + " wysyłam odpowiedź na propozycje terminu - INNY TERMIN");
                 break;
             default:
@@ -45,7 +41,6 @@ public class SendProposalResponse extends OneShotBehaviour {
         }
 
         message.setOntology(OntologyNames.COLLECTION_DETAILS_ONTOLOGY);
-        message.setContent(content);
         message.addReceiver(giverSender);
         receiver.send(message);
     }

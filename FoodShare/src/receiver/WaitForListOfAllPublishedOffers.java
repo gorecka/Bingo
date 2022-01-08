@@ -25,10 +25,10 @@ public class WaitForListOfAllPublishedOffers extends Behaviour {
         ACLMessage message = myAgent.receive(mt);
         if (message != null) {
             System.out.println("Agent " + receiver.getAID().getName() + " otrzymal wiadomość ");
-            System.out.println("Treść otrzymanej wiadomości: " + message.getContent());
             int performative = message.getPerformative();
             if (performative == ACLMessage.INFORM) {
                 System.out.println("Otrzymano listę opublikowanych ofert (lista może być pusta)");
+                System.out.println("Treść otrzymanej wiadomości: " + message.getContent());
             } else if (performative == ACLMessage.REFUSE) {
                 System.out.println("Wystąpił błąd w wyniku którego nie udało się pobrać listy opublikowanych ofert");
             }

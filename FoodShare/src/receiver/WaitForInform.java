@@ -37,7 +37,7 @@ public class WaitForInform extends CyclicBehaviour {
                 System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o usunięciu oferty " + content.get("offerID"));
                 // TODO
             } else if (ontology.equals(OntologyNames.COLLECTION_DETAILS_ONTOLOGY)) {
-                System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o rezygnacji wystawiającego z negocjacji oferty o ID " + content.get("offerID"));
+                System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o rezygnacji wystawiającego z negocjacji oferty \n" + content);
                 // TODO
             }
 

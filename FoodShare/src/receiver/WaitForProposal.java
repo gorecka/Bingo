@@ -36,7 +36,7 @@ public class WaitForProposal extends CyclicBehaviour {
         ACLMessage message = receiver.receive(mt);
 
         if (message != null) {
-            System.out.println("Agent " + receiver.getAID().getName() + " otrzymal propozycje terminu ");
+            System.out.println("Agent " + receiver.getAID().getName() + " otrzymal propozycje terminu \n" + message.getContent() + "\n");
             message.getSender();
 
             //TODO: podjęcie decyzji dotyczącej terminu - wybór wartości zmiennej dec
