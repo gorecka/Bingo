@@ -29,9 +29,12 @@ public class WaitForInform extends CyclicBehaviour {
             JSONObject content = new JSONObject(message.getContent());
 
             // decyzja co powinien zrobić odbiorca
-            if (ontology.equals(OntologyNames.OFFER_UPDATE_ONTOLOGY)) {
+            if (ontology.equals(OntologyNames.EDITING_OFFER_ONTOLOGY)) {
                 System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o zmianie w ofercie " + content.get("offerID"));
-                // poinformuj o zmianie/usunięciu oferty
+                // poinformuj o zmianie w ofercie
+                // TODO
+            } else if (ontology.equals(OntologyNames.DELETING_OFFER_ONTOLOGY)) {
+                System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o usunięciu oferty " + content.get("offerID"));
                 // TODO
             }
 
