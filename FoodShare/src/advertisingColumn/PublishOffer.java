@@ -3,6 +3,7 @@ package advertisingColumn;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
+import org.json.JSONObject;
 
 public class PublishOffer extends OneShotBehaviour {
     AdvertisingColumnAgent advertisingColumn;
@@ -22,10 +23,13 @@ public class PublishOffer extends OneShotBehaviour {
 
         // sprawdzanie czy wystawiający nie ma zablokowanego konta
         // TODO
+        JSONObject publishedOffer = new JSONObject();
+        publishedOffer.put("offerID", "1234");
+        String replyContent = publishedOffer.toString();
+
         boolean isAccountSuspended = false;
 
         ACLMessage reply;
-        String replyContent;
         if (isAccountSuspended) {
             // nie można dodać oferty - przygotowanie wiadomości REFUSE
             System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle wiadomosc do wystawiajacego - nie mozna dodac oferty");
@@ -36,7 +40,6 @@ public class PublishOffer extends OneShotBehaviour {
             // można dodać ofertę - dodanie oferty i przygotowanie wiadomości AGREE
             System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle wiadomosc do wystawiajacego - oferta zostala dodana");
             reply = new ACLMessage(ACLMessage.AGREE);
-            replyContent = "Oferta została dodana";
         }
 
         reply.addReceiver(giverAgentName);

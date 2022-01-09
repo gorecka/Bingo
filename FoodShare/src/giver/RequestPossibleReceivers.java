@@ -4,6 +4,7 @@ import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
+import org.json.JSONObject;
 
 public class RequestPossibleReceivers extends OneShotBehaviour {
     GiverAgent giver;
@@ -15,12 +16,16 @@ public class RequestPossibleReceivers extends OneShotBehaviour {
     @Override
     public void action() {
 
+        JSONObject jsonContent = new JSONObject();
+        jsonContent.put("offerID", "2345");
+        String content = jsonContent.toString();
+
         System.out.println(giver.getAID().getName() + " zaraz wysle prosbe o listę chętnych");
         // przygotowanie wiadomości i wysłanie jej do słupa ogłoszeniowego
         ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
         msg.addReceiver(new AID("Slup", AID.ISLOCALNAME));
         msg.setOntology(OntologyNames.GETTING_POSSIBLE_RECEIVERS_ONTOLOGY);
-        msg.setContent("Prośba o listę chętnych zgłoszonych do oferty nr 1");
+        msg.setContent(content);
         giver.send(msg);
 
         // oczekiwanie na odpowiedź
