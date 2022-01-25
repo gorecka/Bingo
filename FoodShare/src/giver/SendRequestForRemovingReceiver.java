@@ -8,10 +8,10 @@ import org.json.JSONObject;
 
 public class SendRequestForRemovingReceiver extends OneShotBehaviour {
     String receiver;
-    String offerID;
+    int offerID;
     GiverAgent giver;
 
-    public SendRequestForRemovingReceiver(GiverAgent giver, AID sender, String offerID) {
+    public SendRequestForRemovingReceiver(GiverAgent giver, AID sender, int offerID) {
         this.giver = giver;
         this.receiver = sender.getName();
         this.offerID = offerID;

@@ -40,8 +40,25 @@ public class WaitForProposal extends CyclicBehaviour {
             message.getSender();
 
             //TODO: podjęcie decyzji dotyczącej terminu - wybór wartości zmiennej dec
-            receiver.addBehaviour(new SendProposalResponse(receiver, message.getSender(), dec));
-            ++CFPCounter;
+//            Scanner scanner = new Scanner(System.in);
+//            System.out.println("\t\t wybierz OK, RESIGN lub CFP");
+//            String choice = scanner.next();
+            String choice = "OK";
+            switch(choice) {
+                case "OK":
+                    receiver.addBehaviour(new SendProposalResponse(receiver, message.getSender(), ReceiverDecision.OK));
+                    break;
+                case "RESIGN":
+                    receiver.addBehaviour(new SendProposalResponse(receiver, message.getSender(), ReceiverDecision.RESIGN));
+                    break;
+                case "CFP":
+                    receiver.addBehaviour(new SendProposalResponse(receiver, message.getSender(), ReceiverDecision.CFP));
+                    break;
+                default:
+                    break;
+            }
+            //receiver.addBehaviour(new SendProposalResponse(receiver, message.getSender(), dec));
+            //++CFPCounter;
         } else {
             System.out.println("Agent " + receiver.getAID().getName() + " nie dostal propozycji terminu - blokada");
             block();

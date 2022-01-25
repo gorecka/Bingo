@@ -11,6 +11,7 @@ public class SendProposal extends OneShotBehaviour {
     GiverAgent giver;
     //TODO
     AID ChosenReceiverID;
+    int offerID;
 
     public SendProposal(GiverAgent agent) {
         giver = agent;
@@ -20,19 +21,22 @@ public class SendProposal extends OneShotBehaviour {
         giver = agent;
         this.ChosenReceiverID = chosenReceiverID;
     }
+    public SendProposal(GiverAgent agent, AID chosenReceiverID, int offerID) {
+        giver = agent;
+        this.ChosenReceiverID = chosenReceiverID;
+        this.offerID = offerID;
+    }
+
 
 
     @Override
     public void action() {
         System.out.println("Agent " + giver.getAID().getName() + " wysyłam propozycje terminu do agenta " + ChosenReceiverID.getName());
         // przygotowanie wiadomości
+
         ACLMessage message;
 
-        JSONObject content = new JSONObject();
-        content.put("offerID", "1");
-        content.put("place", "miejsce A");
-        content.put("date", "20.01.2022 05:00:00 PM");
-
+        JSONObject content = prepareProposal();
 
         message = new ACLMessage(ACLMessage.PROPOSE);
         message.setOntology(OntologyNames.COLLECTION_DETAILS_ONTOLOGY);
@@ -41,5 +45,13 @@ public class SendProposal extends OneShotBehaviour {
         giver.send(message);
 
         giver.addBehaviour(new WaitForProposalAnswear(giver));
+    }
+
+    JSONObject prepareProposal() {
+        JSONObject content = new JSONObject();
+        content.put("offerID", offerID);
+        content.put("place", "miejsce A");
+        content.put("date", "20.01.2022 05:00:00 PM");
+        return content;
     }
 }

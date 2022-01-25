@@ -13,7 +13,7 @@ public class WaitForProposalAnswear extends Behaviour {
         giver = agent;
     }
     //TODO ID oferty
-    String offerID = "1";
+    int offerID = 1;
 
     @Override
     public void action() {
@@ -39,7 +39,7 @@ public class WaitForProposalAnswear extends Behaviour {
         if (messageAccept != null) {
             System.out.println("Agent " + giver.getAID().getName() + " otrzymal akceptację terminu -> wysyłam informacje do słupa ");
             isDone = true;
-            giver.addBehaviour(new SendCollectionDetails(giver, messageAccept.getSender()));
+            giver.addBehaviour(new SendCollectionDetails(giver, messageAccept.getSender(), offerID));
         } else if (messageReject != null) {
             System.out.println("Agent " + giver.getAID().getName() + " otrzymal odmowę terminu - koniec negocjacji");
             isDone = true;
