@@ -37,4 +37,15 @@ public class AdvertisingColumnAgent extends Agent {
         activeOffers.add(offer1);
         return activeOffers;
     }
+
+    public Offer getOfferById(int offerId) {
+        Offer myOffer = new Offer();
+        for (Offer offer : offers) {
+            if (offer.getOfferId() == offerId) {
+                myOffer = offer;
+                break;
+            }
+        }
+        return myOffer;
+    }
 }
