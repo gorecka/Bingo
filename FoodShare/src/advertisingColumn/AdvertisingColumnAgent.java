@@ -1,9 +1,17 @@
 package advertisingColumn;
 
+import advertisingColumn.data.Offer;
+import advertisingColumn.data.User;
 import jade.core.AID;
 import jade.core.Agent;
 
+import java.util.List;
+
 public class AdvertisingColumnAgent extends Agent {
+
+    private List<User> users;
+    private List<Offer> offers;
+
     protected void setup() {
         System.out.println("Cześć, tu " + getAID().getName() + " !");
         addBehaviour(new WaitForRequest(this));
