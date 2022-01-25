@@ -1,10 +1,13 @@
 package advertisingColumn;
 
+import advertisingColumn.data.Offer;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class GetAllPublishedOffers extends OneShotBehaviour {
     AdvertisingColumnAgent advertisingColumn;
@@ -22,24 +25,13 @@ public class GetAllPublishedOffers extends OneShotBehaviour {
         AID receiverAgentName = message.getSender();
 
         // pobranie listy aktualnych ofert dodanych przez wszystkich wstawiających
-        // TODO
+        // TODO: tworzenie listy json'ów można przenieść do metody getActiveOffers w advertisingColumn
+        List<Offer> listOfAllPublishedOffers = advertisingColumn.getActiveOffers();
         JSONObject allOffers = new JSONObject();
         JSONArray publishedOffers = new JSONArray();
-
-        JSONObject offer_1 = new JSONObject();
-        offer_1.put("product", "ser");
-        offer_1.put("state", "nieotwarty");
-        offer_1.put("bestBeforeDate", "02.02.2022");
-        offer_1.put("description", "Przykładowy opis");
-
-        JSONObject offer_2 = new JSONObject();
-        offer_2.put("product", "bułka");
-        offer_2.put("state", "nieotwarty");
-        offer_2.put("bestBeforeDate", "25.01.2022");
-        offer_2.put("description", "Przykładowy opis");
-
-        publishedOffers.put(offer_1);
-        publishedOffers.put(offer_2);
+        for (Offer o : listOfAllPublishedOffers) {
+            publishedOffers.put(o.toJSON());
+        }
 
         allOffers.put("AllPublishedOffers", publishedOffers);
 

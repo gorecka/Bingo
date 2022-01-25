@@ -1,20 +1,9 @@
 package advertisingColumn.data;
 
+import org.json.JSONObject;
+
 import java.util.Date;
 import java.util.List;
-
-enum OfferStatus {
-    NEW,
-    WAITING_FOR_TAKERS,
-    WAITING_FOR_GIVER,
-    CLOSED
-} // idk, pewnie się zmieni
-
-enum ItemStatus {
-    FRESH,
-    CLOSE_EXPIRATION,
-    IMPERISHABLE
-} // pewnie też do zmiany
 
 public class Offer {
     private int offerId;
@@ -46,6 +35,18 @@ public class Offer {
         creationDate = new Date();
         this.author = author;
         this.itemStatus = itemStatus;
+    }
+
+    public JSONObject toJSON() {
+        JSONObject offer = new JSONObject();
+        offer.put("offerID", offerId);
+        offer.put("name", name);
+        offer.put("status", itemStatus);
+        offer.put("bestBeforeDate", bestBeforeDate);
+        offer.put("description", description);
+        offer.put("author", author);
+        offer.put("creationDate", creationDate);
+        return offer;
     }
 
     public int getOfferId() {
