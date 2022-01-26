@@ -31,7 +31,7 @@ public class ProcessResignation extends OneShotBehaviour {
             JSONObject obj = new JSONObject();
 
             obj.put("receiverName", receiver.getName());
-            obj.put("offerID", json.getString("offerID"));
+            obj.put("offerID", json.getInt("offerID"));
             notification = obj.toString();
             notifyGiver = new ACLMessage(ACLMessage.INFORM);
             notifyGiver.setContent(notification);
@@ -49,7 +49,7 @@ public class ProcessResignation extends OneShotBehaviour {
         String content;
         JSONObject conf = new JSONObject();
         conf.put("message", "Deleted from possible receivers list");
-        conf.put("offerID", json.getString("offerID"));
+        conf.put("offerID", json.getInt("offerID"));
         content = conf.toString();
 
         confirmation = new ACLMessage(ACLMessage.AGREE);

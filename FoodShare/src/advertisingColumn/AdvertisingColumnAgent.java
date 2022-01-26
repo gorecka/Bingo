@@ -12,8 +12,8 @@ import java.util.List;
 
 public class AdvertisingColumnAgent extends Agent {
 
-    private List<User> users;
-    private List<Offer> offers;
+    private List<User> users = new ArrayList<>();
+    private List<Offer> offers = new ArrayList<>();
 
     protected void setup() {
         System.out.println("Cześć, tu " + getAID().getName() + " !");
@@ -38,8 +38,11 @@ public class AdvertisingColumnAgent extends Agent {
         return activeOffers;
     }
 
+
     public Offer getOfferById(int offerId) {
         Offer myOffer = new Offer();
+        //Offer offer1 = new Offer(1, "name", "description", OfferStatus.NEW, new Date(), new User(), ItemStatus.FRESH);
+        //offers.add(offer1);
         for (Offer offer : offers) {
             if (offer.getOfferId() == offerId) {
                 myOffer = offer;

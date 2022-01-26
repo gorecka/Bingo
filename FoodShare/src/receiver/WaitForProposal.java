@@ -4,6 +4,7 @@ import communicationConstants.OntologyNames;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import org.json.JSONObject;
 
 public class WaitForProposal extends CyclicBehaviour {
     ReceiverAgent receiver;
@@ -36,12 +37,30 @@ public class WaitForProposal extends CyclicBehaviour {
         ACLMessage message = receiver.receive(mt);
 
         if (message != null) {
-            System.out.println("Agent " + receiver.getAID().getName() + " otrzymal propozycje terminu \n" + message.getContent() + "\n");
+            // idoferty z treści
+            JSONObject json = new JSONObject(message.getContent());
+            int offerID = json.getInt("offerID");
+            System.out.println("Agent " + receiver.getAID().getName() + " otrzymal propozycje terminu dla oferty o id=" + offerID + ": \n" + message.getContent() + "\n");
             message.getSender();
 
             //TODO: podjęcie decyzji dotyczącej terminu - wybór wartości zmiennej dec
-            receiver.addBehaviour(new SendProposalResponse(receiver, message.getSender(), dec));
-            ++CFPCounter;
+//            Scanner scanner = new Scanner(System.in);
+//            System.out.println("\t\t wybierz OK, RESIGN lub CFP");
+//            String choice = scanner.next();
+            String choice = "CFP";
+            switch(choice) {
+                case "OK":
+                    receiver.addBehaviour(new SendProposalResponse(receiver, message.getSender(), offerID, ReceiverDecision.OK));
+                    break;
+                case "RESIGN":
+                    receiver.addBehaviour(new SendProposalResponse(receiver, message.getSender(), offerID, ReceiverDecision.RESIGN));
+                    break;
+                case "CFP":
+                    receiver.addBehaviour(new SendProposalResponse(receiver, message.getSender(), offerID, ReceiverDecision.CFP));
+                    break;
+                default:
+                    break;
+            }
         } else {
             System.out.println("Agent " + receiver.getAID().getName() + " nie dostal propozycji terminu - blokada");
             block();

@@ -1,6 +1,7 @@
 package giver;
 
 import communicationConstants.OntologyNames;
+import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -28,7 +29,9 @@ public class WaitForListOfPossibleReceivers extends Behaviour {
             int performative = message.getPerformative();
             if (performative == ACLMessage.INFORM) {
                 System.out.println("Otrzymano listę chętnych (lista może być pusta)");
-                giver.addBehaviour(new SendProposal(giver));
+                //TODO: można wyświetlić listę + przekazać id oferty dla której otrzymano listę chętnych
+//                giver.addBehaviour(new SendProposal(giver));
+                giver.addBehaviour(new SendProposal(giver, new AID("R1", AID.ISLOCALNAME), 1));
             } else if (performative == ACLMessage.REFUSE) {
                 System.out.println("Wystąpił błąd w wyniku którego nie udało się pobrać listy chętnych");
             }

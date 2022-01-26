@@ -28,7 +28,7 @@ public class WaitForReviewForm extends CyclicBehaviour {
             receiver.addBehaviour(new SendFilledInReview(receiver, message));
 
         } else {
-            System.out.println("Agent " + receiver.getAID().getName() + " nie dostal wiadomosci - blokada");
+            System.out.println("Agent " + receiver.getAID().getName() + " nie dostal wiadomosci (ankiety)- blokada");
             block();
         }
     }

@@ -10,9 +10,9 @@ public class SendResignationToReceiver extends OneShotBehaviour {
 
     GiverAgent giver;
     AID receiverAID;
-    String  offerID;
+    int  offerID;
 
-    public SendResignationToReceiver(GiverAgent giver, AID receiver, String offerID) {
+    public SendResignationToReceiver(GiverAgent giver, AID receiver, int offerID) {
         this.giver = giver;
         this.receiverAID = receiver;
         this.offerID = offerID;

@@ -9,9 +9,11 @@ import org.json.JSONObject;
 public class SendCollectionDetails extends OneShotBehaviour {
     GiverAgent giver;
     AID receiverID;
-    public SendCollectionDetails(GiverAgent agent, AID receiverID) {
+    int offerID;
+    public SendCollectionDetails(GiverAgent agent, AID receiverID, int offerID) {
         giver = agent;
         this.receiverID = receiverID;
+        this.offerID = offerID;
     }
 
     @Override
@@ -20,7 +22,7 @@ public class SendCollectionDetails extends OneShotBehaviour {
         //String content = "miejsce X, godzina Y";
 
         JSONObject content = new JSONObject();
-        content.put("offerID", "1");
+        content.put("offerID", offerID);
         content.put("place", "miejsce A");
         content.put("date", "20.01.2022 05:00:00 PM");
         content.put("receiverID", receiverID.toString());
