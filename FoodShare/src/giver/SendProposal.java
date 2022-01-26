@@ -9,7 +9,6 @@ import org.json.JSONObject;
 public class SendProposal extends OneShotBehaviour {
 
     GiverAgent giver;
-    //TODO
     AID ChosenReceiverID;
     int offerID;
 
@@ -26,8 +25,6 @@ public class SendProposal extends OneShotBehaviour {
         this.ChosenReceiverID = chosenReceiverID;
         this.offerID = offerID;
     }
-
-
 
     @Override
     public void action() {

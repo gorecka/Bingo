@@ -21,14 +21,14 @@ public class ProcessUpdateOfferStatus extends OneShotBehaviour {
 
     @Override
     public void action() {
-        //zaktualizuj informacje w bazie danych: status oferty
-        // TODO
+
         System.out.println(advertisingColumn.getAID().getName() + " aktualizuję informacje o ustalonym odbiorze przedmiotu oferty - zaraz wyślę potwierdzenie do wystawiającego:\n"+message.getContent());
 
-        //wyslanie potwierdzenia aktualizacji statusu oferty
-
+        //zmiana statusu oferty
         Offer offerToUpdate = advertisingColumn.getOfferByID(offerID);
         offerToUpdate.setOfferStatus(OfferStatus.CLOSED);
+
+        //wyslanie potwierdzenia aktualizacji statusu oferty
 
         ACLMessage confirmation;
         String content;
