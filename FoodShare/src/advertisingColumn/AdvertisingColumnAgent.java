@@ -38,7 +38,6 @@ public class AdvertisingColumnAgent extends Agent {
         return activeOffers;
     }
 
-
     public Offer getOfferById(int offerId) {
         Offer myOffer = new Offer();
         //Offer offer1 = new Offer(1, "name", "description", OfferStatus.NEW, new Date(), new User(), ItemStatus.FRESH);
@@ -50,5 +49,16 @@ public class AdvertisingColumnAgent extends Agent {
             }
         }
         return myOffer;
+    }
+
+    public void updateOffer(Offer newOffer) {
+        offers.forEach(el -> {
+            if (el.getOfferId() == newOffer.getOfferId())
+                offers.set(offers.indexOf(el), newOffer);
+        });
+    }
+
+    public void deleteOffer(int offerId) {
+        offers.remove(offerId);
     }
 }

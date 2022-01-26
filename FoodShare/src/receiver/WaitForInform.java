@@ -29,16 +29,18 @@ public class WaitForInform extends CyclicBehaviour {
             JSONObject content = new JSONObject(message.getContent());
 
             // decyzja co powinien zrobić odbiorca
-            if (ontology.equals(OntologyNames.EDITING_OFFER_ONTOLOGY)) {
-                System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o zmianie w ofercie " + content.get("offerID"));
-                // poinformuj o zmianie w ofercie
-                // TODO
-            } else if (ontology.equals(OntologyNames.DELETING_OFFER_ONTOLOGY)) {
-                System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o usunięciu oferty " + content.get("offerID"));
-                // TODO
-            } else if (ontology.equals(OntologyNames.COLLECTION_DETAILS_ONTOLOGY)) {
-                System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o rezygnacji wystawiającego z negocjacji oferty \n" + content);
-                // TODO
+            switch (ontology) {
+                case OntologyNames.EDITING_OFFER_ONTOLOGY:
+                    System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o zmianie w ofercie " + content.get("offerId"));
+                    System.out.println("content: " + content);
+                    break;
+                case OntologyNames.DELETING_OFFER_ONTOLOGY:
+                    System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o usunięciu oferty " + content.get("offerId"));
+                    System.out.println("content: " + content);
+                    break;
+                case OntologyNames.COLLECTION_DETAILS_ONTOLOGY:
+                    System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o rezygnacji wystawiającego z negocjacji oferty \n" + content);
+                    break;
             }
 
         } else {

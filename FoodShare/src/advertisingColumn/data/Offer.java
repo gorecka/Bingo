@@ -2,8 +2,11 @@ package advertisingColumn.data;
 
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Offer {
     private int offerId;
@@ -79,6 +82,10 @@ public class Offer {
 
     public void setBestBeforeDate(Date bestBeforeDate) {
         this.bestBeforeDate = bestBeforeDate;
+    }
+    public void setBestBeforeDate(String bestBeforeDate) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        this.bestBeforeDate = formatter.parse(bestBeforeDate);
     }
 
     public Date getCreationDate() {
