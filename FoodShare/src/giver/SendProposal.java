@@ -41,7 +41,7 @@ public class SendProposal extends OneShotBehaviour {
         message.addReceiver(ChosenReceiverID);
         giver.send(message);
 
-        giver.addBehaviour(new WaitForProposalAnswear(giver));
+        giver.addBehaviour(new WaitForProposalAnswer(giver));
     }
 
     JSONObject prepareProposal() {

@@ -25,7 +25,7 @@ public class ProcessUpdateOfferStatus extends OneShotBehaviour {
         System.out.println(advertisingColumn.getAID().getName() + " aktualizuję informacje o ustalonym odbiorze przedmiotu oferty - zaraz wyślę potwierdzenie do wystawiającego:\n"+message.getContent());
 
         //zmiana statusu oferty
-        Offer offerToUpdate = advertisingColumn.getOfferByID(offerID);
+        Offer offerToUpdate = advertisingColumn.getOfferById(offerID);
         offerToUpdate.setOfferStatus(OfferStatus.CLOSED);
 
         //wyslanie potwierdzenia aktualizacji statusu oferty

@@ -6,11 +6,11 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import org.json.JSONObject;
 
-public class WaitForProposalAnswear extends Behaviour {
+public class WaitForProposalAnswer extends Behaviour {
 
     GiverAgent giver;
     boolean isDone = false;
-    WaitForProposalAnswear(GiverAgent agent) {
+    WaitForProposalAnswer(GiverAgent agent) {
         giver = agent;
     }
 
