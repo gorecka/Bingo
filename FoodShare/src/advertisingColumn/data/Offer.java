@@ -4,9 +4,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class Offer {
     private int offerId;
@@ -15,6 +13,7 @@ public class Offer {
     private OfferStatus offerStatus;
     private Date bestBeforeDate;
     private Date creationDate;
+    private Date offerExpirationDate;
 
     private User author;
     private List<User> possibleReceivers;
@@ -28,7 +27,11 @@ public class Offer {
     private int rating;
     private Date reviewDate;
 
-    public Offer() {}
+    private static int nextOfferId = 1357;
+
+    public Offer() {
+    }
+
     public Offer(int offerId, String name, String description, OfferStatus offerStatus, Date bestBeforeDate, User author, ItemStatus itemStatus) {
         this.offerId = offerId;
         this.name = name;
@@ -38,6 +41,29 @@ public class Offer {
         creationDate = new Date();
         this.author = author;
         this.itemStatus = itemStatus;
+    }
+
+    public Offer(JSONObject offerJson, User giverUser) throws ParseException {
+        this.offerId = nextOfferId;
+        nextOfferId += 1;
+        this.name = offerJson.getString("name");
+        this.description = offerJson.getString("description");
+        this.offerStatus = OfferStatus.NEW;
+        this.itemStatus = offerJson.getEnum(ItemStatus.class, "itemStatus");
+
+        String bestBeforeDateString = offerJson.getString("bestBeforeDate");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        this.bestBeforeDate = formatter.parse(bestBeforeDateString);
+
+        this.creationDate = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(this.creationDate);
+        c.add(Calendar.DATE, 14); // oferta ważna przez 14 dni, może ustawiać na bestBeforeDateString jeśli
+        // bestBeforeDate <= creationDate + 14 dni ?
+        this.offerExpirationDate = c.getTime();
+
+        this.author = giverUser;
+        this.possibleReceivers = new ArrayList<>();
     }
 
     public JSONObject toJSON() {
@@ -50,6 +76,29 @@ public class Offer {
         offer.put("author", author);
         offer.put("creationDate", creationDate);
         return offer;
+    }
+
+    @Override
+    public String toString() {
+        return "Offer{" +
+                "offerId=" + offerId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", offerStatus=" + offerStatus +
+                ", bestBeforeDate=" + bestBeforeDate +
+                ", creationDate=" + creationDate +
+                ", offerExpirationDate=" + offerExpirationDate +
+                ", author=" + author.getUsername() +
+                ", possibleReceivers=" + possibleReceivers +
+                ", chosenReceiver=" + chosenReceiver +
+                ", itemStatus=" + itemStatus +
+                ", receiptPlace='" + receiptPlace + '\'' +
+                ", receiptDate=" + receiptDate +
+                ", receiptDetailsSettled=" + receiptDetailsSettled +
+                ", receiptConfirmationDate=" + receiptConfirmationDate +
+                ", rating=" + rating +
+                ", reviewDate=" + reviewDate +
+                '}';
     }
 
     public int getOfferId() {
@@ -83,6 +132,7 @@ public class Offer {
     public void setBestBeforeDate(Date bestBeforeDate) {
         this.bestBeforeDate = bestBeforeDate;
     }
+
     public void setBestBeforeDate(String bestBeforeDate) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         this.bestBeforeDate = formatter.parse(bestBeforeDate);
@@ -94,6 +144,14 @@ public class Offer {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Date getOfferExpirationDate() {
+        return offerExpirationDate;
+    }
+
+    public void setOfferExpirationDate(Date offerExpirationDate) {
+        this.offerExpirationDate = offerExpirationDate;
     }
 
     public User getAuthor() {

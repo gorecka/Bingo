@@ -1,5 +1,6 @@
 package giver;
 
+import advertisingColumn.data.ItemStatus;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -18,9 +19,9 @@ public class SendOffer extends OneShotBehaviour {
         // przygotowanie oferty
         //TODO
         JSONObject content = new JSONObject();
-        content.put("product", "ser");
-        content.put("state", "nieotwarty");
-        content.put("bestBeforeDate", "02.02.2022");
+        content.put("name", "ser");
+        content.put("itemStatus", ItemStatus.FRESH);
+        content.put("bestBeforeDate", "02-02-2022");
         content.put("description", "Przykładowy opis");
 
         System.out.println(giver.getAID().getName() + " zaraz wysle wiadomosc do slupa");

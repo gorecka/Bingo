@@ -5,7 +5,9 @@ import advertisingColumn.data.Offer;
 import advertisingColumn.data.OfferStatus;
 import advertisingColumn.data.User;
 import jade.core.Agent;
+import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +21,7 @@ public class AdvertisingColumnAgent extends Agent {
         System.out.println("Cześć, tu " + getAID().getName() + " !");
         addBehaviour(new WaitForRequest(this));
         //addBehaviour(new SendReviewForm(this, new AID("R1", AID.ISLOCALNAME), new AID("W1", AID.ISLOCALNAME).getName(), "Example offer"));
+        addUsers();
     }
 
     protected void takeDown() {
@@ -26,7 +29,8 @@ public class AdvertisingColumnAgent extends Agent {
     }
 
     protected List<Offer> getActiveOffers() {
-        List<Offer> activeOffers = new ArrayList<>();;
+        List<Offer> activeOffers = new ArrayList<>();
+        ;
         // TODO: Docelowo pętlę for odkomentować, a usunąć linię 36 i 37
 //        for (Offer o : offers) {
 //            if(o.getOfferStatus() != OfferStatus.WAITING_FOR_GIVER) {
@@ -60,5 +64,35 @@ public class AdvertisingColumnAgent extends Agent {
 
     public void deleteOffer(int offerId) {
         offers.remove(offerId);
+    }
+
+    public User getUserByName(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    private void addUsers() {
+        User user1 = new User("user1");
+        users.add(user1);
+
+        User user2 = new User("user2");
+        users.add(user2);
+
+        User suspendedUser = new User("suspendedUser3");
+        suspendedUser.setSuspended(true);
+        users.add(suspendedUser);
+    }
+
+    public int publishOffer(String offerString, User giverUser) throws ParseException {
+        JSONObject offerJson = new JSONObject(offerString);
+        Offer offer = new Offer(offerJson, giverUser);
+        offers.add(offer);
+
+        int offerId = offer.getOfferId();
+        return offerId;
     }
 }
