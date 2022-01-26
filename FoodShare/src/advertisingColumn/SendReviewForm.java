@@ -1,5 +1,6 @@
 package advertisingColumn;
 
+import advertisingColumn.data.Offer;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -14,12 +15,15 @@ public class SendReviewForm extends OneShotBehaviour {
     AID receiverName;
     String giverName;
     String offerName;
+    int offerId;
 
-    SendReviewForm(AdvertisingColumnAgent agent, AID receiver, String giver, String offer){
+    SendReviewForm(AdvertisingColumnAgent agent, int id){
         advertisingColumn = agent;
-        receiverName = receiver;
-        giverName = giver;
-        offerName = offer;
+        offerId = id;
+        Offer offer = advertisingColumn.getOfferById(offerId);
+        receiverName = new AID(offer.getChosenReceiver().getUsername(), AID.ISLOCALNAME);
+        giverName = offer.getAuthor().getUsername();
+        offerName = offer.getName();
     }
 
     @Override
@@ -31,6 +35,7 @@ public class SendReviewForm extends OneShotBehaviour {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         json.put("timestamp", dtf.format(LocalDateTime.now()));
         json.put("giver", giverName);
+        json.put("offerId", offerId);
 
         content = json.toString();
 

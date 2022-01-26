@@ -1,10 +1,13 @@
 package advertisingColumn;
 
+import advertisingColumn.data.Offer;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import org.json.JSONObject;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ProcessReviewForm extends OneShotBehaviour {
     AdvertisingColumnAgent advertisingColumn;
@@ -18,23 +21,32 @@ public class ProcessReviewForm extends OneShotBehaviour {
 
     @Override
     public void action() {
-        // pobranie obecnej oceny wystawiajacego
-        //TODO
-        double avg = 3.8;
-        int numberOfReviews = 5;
 
         System.out.println("Dostalem ankiete i zaczynam przetwarzac");
         String content = message.getContent();
         JSONObject obj = new JSONObject(content);
         AID giver = new AID(obj.getString("giver"));
+        int score = Integer.parseInt(obj.getString("review"));
+        int offerId = Integer.parseInt(obj.getString("offerId"));
+        Offer offer = advertisingColumn.getOfferById(offerId);
+
+        // pobranie obecnej oceny wystawiajacego
+        offer.getAuthor().addRating(score);
+        int ratingCount = offer.getAuthor().getRatingCount();
+        double avg = (double) offer.getAuthor().getRatingSum() / ratingCount;
+        if (ratingCount > 2 && avg < 2) {
+            Date dt = new Date();
+            offer.getAuthor().setSuspended(true);
+            offer.getAuthor().setSuspensionStart(dt);
+            Calendar c = Calendar.getInstance();
+            c.setTime(dt);
+            c.add(Calendar.DATE, 7);
+            dt = c.getTime();
+            offer.getAuthor().setSuspensionEnd(dt );
+        }
+
+        boolean isBlocked = offer.getAuthor().isSuspended();
         System.out.println("Wysle ankiete do " + giver);
-        double score = Double.parseDouble(obj.getString("review"));
-        // wyliczenie sredniej oceny
-        avg = ((avg * numberOfReviews) + score)/++numberOfReviews;
-        boolean isBlocked = false;
-        if (avg < 2.0 && numberOfReviews > 3) isBlocked = true;
-        //zapisanie nowej sredniej
-        //TODO
 
         System.out.println("Ocena: " + avg + " Czy blokada? "  + isBlocked);
         //wyslanie informacji o nowej ocenie i potencjalnej blokadzie

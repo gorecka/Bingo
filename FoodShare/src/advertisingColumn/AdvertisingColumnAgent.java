@@ -38,16 +38,17 @@ public class AdvertisingColumnAgent extends Agent {
         return activeOffers;
     }
 
-    protected Offer getOfferByID(int offerID) {
-        Offer offer1 = new Offer(1, "name", "description", OfferStatus.NEW, new Date(), new User(), ItemStatus.FRESH);
-        offers.add(offer1);
-        Offer offerSearchedByID = new Offer();
 
-        for (Offer o : offers) {
-            if(o.getOfferId() == offerID) {
-                offerSearchedByID = o;
+    public Offer getOfferById(int offerId) {
+        Offer myOffer = new Offer();
+        //Offer offer1 = new Offer(1, "name", "description", OfferStatus.NEW, new Date(), new User(), ItemStatus.FRESH);
+        //offers.add(offer1);
+        for (Offer offer : offers) {
+            if (offer.getOfferId() == offerId) {
+                myOffer = offer;
+                break;
             }
         }
-        return offerSearchedByID;
+        return myOffer;
     }
 }
