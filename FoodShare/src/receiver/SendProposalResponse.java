@@ -38,6 +38,7 @@ public class SendProposalResponse extends OneShotBehaviour {
             case CFP:
                 message = new ACLMessage(ACLMessage.CFP);
                 System.out.println("Agent " + receiver.getAID().getName() + " wysyłam odpowiedź na propozycje terminu - INNY TERMIN");
+                receiver.addBehaviour(new WaitForProposal(receiver));
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + decision);

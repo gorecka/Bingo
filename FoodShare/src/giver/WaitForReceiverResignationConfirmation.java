@@ -16,6 +16,8 @@ public class WaitForReceiverResignationConfirmation extends Behaviour {
 
     @Override
     public void action() {
+        System.out.println("Agent " + giver.getAID().getName() + " czekam na potwierdzenie zapisu rezygnacji z odbierającego od słupa");
+
         MessageTemplate mtOntology = MessageTemplate.MatchOntology(OntologyNames.RESIGNATION_ONTOLOGY);
         MessageTemplate mtPerformative = MessageTemplate.MatchPerformative(ACLMessage.AGREE);
         MessageTemplate mt = MessageTemplate.and(mtPerformative, mtOntology);
