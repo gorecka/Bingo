@@ -14,7 +14,7 @@ public class WaitForRequest extends CyclicBehaviour {
 
     @Override
     public void action() {
-        System.out.println("Agent " + advertisingColumn.getAID().getName() + " chce odebrac wiadomosc");
+        System.out.println("Agent " + advertisingColumn.getAID().getName() + " czekam na żądania");
 
         // czekanie na wiadomość, która pasuje do wzorca
         MessageTemplate mtPerformative = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
@@ -56,9 +56,13 @@ public class WaitForRequest extends CyclicBehaviour {
                 System.out.println("Agent " + advertisingColumn.getAID().getName() + " otrzymal informacje o szczegółach odbior ");
                 advertisingColumn.addBehaviour(new ProcessUpdateOfferStatus(advertisingColumn, message));
             }
+            else {
+                System.out.println("Agent " + advertisingColumn.getAID().getName() + " otrzymal nieznany typ żądania");
+                block();
+            }
 
         } else {
-            System.out.println("Agent " + advertisingColumn.getAID().getName() + " nie dostal wiadomosci - blokada");
+            System.out.println("Agent " + advertisingColumn.getAID().getName() + " nie dostal żądania - blokada");
             block();
         }
     }
