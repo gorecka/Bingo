@@ -31,7 +31,7 @@ public class SendRequestForRemovingReceiver extends OneShotBehaviour {
         message.setOntology(OntologyNames.RESIGNATION_ONTOLOGY);
         message.setContent(content);
         message.addReceiver(new AID("Slup", AID.ISLOCALNAME));
-        System.out.println(giver.getAID().getName() + " zaraz wysle rezygnacje odbierającego z mojej oferty do slupa: \n" + content);
+        System.out.println(giver.getAID().getName() + " zaraz wysle rezygnacje odbierającego z mojej oferty do slupa, \ntreść wysyłanej wiadomości: \n" + content);
 
         giver.send(message);
 
