@@ -18,7 +18,7 @@ public class DeleteOffer extends OneShotBehaviour {
     @Override
     public void action() {
         JSONObject content = new JSONObject();
-        content.put("id", offerId);
+        content.put("offerId", offerId);
 
         System.out.println(giver.getAID().getName() + " sending DeleteOffer request");
         // przygotowanie wiadomości i wysłanie jej do słupa ogłoszeniowego
