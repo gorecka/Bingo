@@ -60,6 +60,26 @@ public class AdvertisingColumnAgent extends Agent {
         return null;
     }
 
+    public List<Offer> getOffersByAuthor(String username) {
+        // dodawanie jednej oferty na potrzeby testów
+        User user = new User("user1");
+        Offer offer1 = new Offer(2345, "name", "description", OfferStatus.NEW, new Date(), user, ItemStatus.FRESH);
+        List<User> possibleReceivers = new ArrayList<>();
+        possibleReceivers.add(new User("user2"));
+        possibleReceivers.add(new User("suspendedUser3"));
+        offer1.setPossibleReceivers(possibleReceivers);
+        offers.add(offer1);
+
+        List<Offer> userOffers = new ArrayList<>();
+
+        for (Offer offer : offers) {
+            if (offer.getAuthor().getUsername().equals(username)) {
+                userOffers.add(offer);
+            }
+        }
+        return userOffers;
+    }
+
     public void updateOffer(Offer newOffer) {
         offers.forEach(el -> {
             if (el.getOfferId() == newOffer.getOfferId())

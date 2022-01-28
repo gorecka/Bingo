@@ -1,5 +1,6 @@
 package advertisingColumn.data;
 
+import communicationConstants.JsonKeys;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -69,13 +70,13 @@ public class Offer {
 
     public JSONObject toJSON() {
         JSONObject offer = new JSONObject();
-        offer.put("offerID", offerId);
-        offer.put("name", name);
-        offer.put("status", itemStatus);
-        offer.put("bestBeforeDate", bestBeforeDate);
-        offer.put("description", description);
-        offer.put("author", author);
-        offer.put("creationDate", creationDate);
+        offer.put(JsonKeys.OFFER_ID, offerId);
+        offer.put(JsonKeys.OFFER_NAME, name);
+        offer.put(JsonKeys.OFFER_ITEM_STATUS, itemStatus);
+        offer.put(JsonKeys.OFFER_BEST_BEFORE_DATE, bestBeforeDate);
+        offer.put(JsonKeys.OFFER_DESCRIPTION, description);
+        offer.put(JsonKeys.OFFER_AUTHOR, author.getUsername());
+        offer.put(JsonKeys.OFFER_CREATION_DATE, creationDate);
         return offer;
     }
 

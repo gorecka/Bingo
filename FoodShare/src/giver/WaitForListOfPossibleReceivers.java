@@ -1,5 +1,6 @@
 package giver;
 
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
@@ -31,8 +32,8 @@ public class WaitForListOfPossibleReceivers extends Behaviour {
             int performative = message.getPerformative();
             if (performative == ACLMessage.INFORM) {
                 JSONObject content = new JSONObject(message.getContent());
-                int offerId = content.getInt("offerId");
-                JSONArray receiversList = content.getJSONArray("possibleReceivers");
+                int offerId = content.getInt(JsonKeys.OFFER_ID);
+                JSONArray receiversList = content.getJSONArray(JsonKeys.POSSIBLE_RECEIVERS_LIST);
 
                 // wyświetlenie otrzymanej listy chętnych
                 System.out.println("Otrzymano listę chętnych (lista może być pusta) do oferty " + offerId + ": ");
