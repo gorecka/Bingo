@@ -14,6 +14,13 @@ public final class JsonKeys {
     public static final String OFFER_CHOSEN_RECEIVER = "chosenReceiver";
     public static final String OFFER_RECEIVER_NAME = "receiverName";
 
+    public static final String OFFER_REVIEW = "review";
+    public static final String OFFER_SENDING_REVIEW_TIMESTAMP = "timestamp";
+    public static final String OFFER_REVIEWER = "reviewer";
+
+    public static final String USER_RATING_AVERAGE = "average";
+    public static final String USER_IS_BLOCKED = "isBlocked";
+
     public static final String POSSIBLE_RECEIVERS_LIST = "possibleReceivers";
     public static final String MY_PUBLISHED_OFFERS_LIST = "myPublishedOffers";
     public static final String ALL_PUBLISHED_OFFERS_LIST = "allPublishedOffers";

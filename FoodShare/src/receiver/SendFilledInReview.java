@@ -1,5 +1,6 @@
 package receiver;
 
+import communicationConstants.JsonKeys;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -28,8 +29,8 @@ public class SendFilledInReview extends OneShotBehaviour {
         String content = message.getContent();
 
         JSONObject obj = new JSONObject(content);
-        System.out.println("What do you think about " + obj.getString("offer") + " from " + obj.getString("giver") + obj.getString("review"));
-        String timestamp = obj.getString("timestamp");
+        System.out.println("What do you think about " + obj.getString(JsonKeys.OFFER_ID) + " from " + obj.getString(JsonKeys.OFFER_AUTHOR) + obj.getString(JsonKeys.OFFER_REVIEW));
+        String timestamp = obj.getString(JsonKeys.OFFER_SENDING_REVIEW_TIMESTAMP);
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime startDate = LocalDateTime.parse(timestamp, dtf);
@@ -42,8 +43,8 @@ public class SendFilledInReview extends OneShotBehaviour {
             ACLMessage reply;
             String replyContent;
             JSONObject json = new JSONObject();
-            json.put("review", "4");
-            json.put("giver", obj.getString("giver"));
+            json.put(JsonKeys.OFFER_REVIEW, "4");
+            json.put(JsonKeys.OFFER_AUTHOR, obj.getString(JsonKeys.OFFER_AUTHOR));
 
             replyContent = json.toString();
             System.out.println(receiver.getAID().getName() + " zaraz wysle wypelniona ankiete do slupa");

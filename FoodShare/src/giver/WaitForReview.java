@@ -1,5 +1,6 @@
 package giver;
 
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -26,10 +27,10 @@ public class WaitForReview extends CyclicBehaviour {
         if (message != null) {
             String content = message.getContent();
             JSONObject obj = new JSONObject(content);
-            String review = obj.getString("review");
-            String reviewer = obj.getString("reviewer");
-            String isBlocked = obj.getString("isBlocked");
-            String avg = obj.getString("average");
+            String review = obj.getString(JsonKeys.OFFER_REVIEW);
+            String reviewer = obj.getString(JsonKeys.OFFER_REVIEWER);
+            String isBlocked = obj.getString(JsonKeys.USER_IS_BLOCKED);
+            String avg = obj.getString(JsonKeys.USER_RATING_AVERAGE);
 
             System.out.println("Agent " + giver.getAID().getName() + " otrzymal ocene " + review + " od uzytkownika " + reviewer);
             System.out.println("Agent " + giver.getAID().getName() + " ma srednia ocen " + avg + " i stan jego blokady to " + isBlocked);

@@ -1,6 +1,7 @@
 package advertisingColumn;
 
 import advertisingColumn.data.Offer;
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -30,12 +31,12 @@ public class SendReviewForm extends OneShotBehaviour {
     public void action() {
         String content;
         JSONObject json = new JSONObject();
-        json.put("offer", offerName);
-        json.put("review", "In scale from 1 to 5 how satisfied are you with received food?");
+        json.put(JsonKeys.OFFER_NAME, offerName);
+        json.put(JsonKeys.OFFER_REVIEW, "In scale from 1 to 5 how satisfied are you with received food?");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        json.put("timestamp", dtf.format(LocalDateTime.now()));
-        json.put("giver", giverName);
-        json.put("offerId", offerId);
+        json.put(JsonKeys.OFFER_SENDING_REVIEW_TIMESTAMP, dtf.format(LocalDateTime.now()));
+        json.put(JsonKeys.OFFER_AUTHOR, giverName);
+        json.put(JsonKeys.OFFER_ID, offerId);
 
         content = json.toString();
 

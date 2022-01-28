@@ -1,6 +1,7 @@
 package advertisingColumn;
 
 import advertisingColumn.data.Offer;
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -25,9 +26,9 @@ public class ProcessReviewForm extends OneShotBehaviour {
         System.out.println("Dostalem ankiete i zaczynam przetwarzac");
         String content = message.getContent();
         JSONObject obj = new JSONObject(content);
-        AID giver = new AID(obj.getString("giver"));
-        int score = Integer.parseInt(obj.getString("review"));
-        int offerId = Integer.parseInt(obj.getString("offerId"));
+        AID giver = new AID(obj.getString(JsonKeys.OFFER_AUTHOR), AID.ISLOCALNAME);
+        int score = Integer.parseInt(obj.getString(JsonKeys.OFFER_REVIEW));
+        int offerId = Integer.parseInt(obj.getString(JsonKeys.OFFER_ID));
         Offer offer = advertisingColumn.getOfferById(offerId);
 
         // pobranie obecnej oceny wystawiajacego
@@ -53,10 +54,10 @@ public class ProcessReviewForm extends OneShotBehaviour {
         ACLMessage reply;
         String replyContent;
         JSONObject json = new JSONObject();
-        json.put("review", Double.toString(score));
-        json.put("reviewer", message.getSender());
-        json.put("average", Double.toString(avg));
-        json.put("isBlocked", Boolean.toString(isBlocked));
+        json.put(JsonKeys.OFFER_REVIEW, Double.toString(score));
+        json.put(JsonKeys.OFFER_REVIEWER, message.getSender().getLocalName());
+        json.put(JsonKeys.USER_RATING_AVERAGE, Double.toString(avg));
+        json.put(JsonKeys.USER_IS_BLOCKED, Boolean.toString(isBlocked));
         replyContent = json.toString();
 
         reply = new ACLMessage(ACLMessage.INFORM);
