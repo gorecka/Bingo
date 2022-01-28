@@ -1,5 +1,6 @@
 package receiver;
 
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -48,7 +49,7 @@ public class WaitForProposal extends Behaviour {
         if (messageProposal != null) {
             // idoferty z treści
             JSONObject json = new JSONObject(messageProposal.getContent());
-            int offerID = json.getInt("offerID");
+            int offerID = json.getInt(JsonKeys.OFFER_ID);
             System.out.println("Agent " + receiver.getAID().getName() + " otrzymal propozycje terminu dla oferty o id=" + offerID + ": \n" + messageProposal.getContent());
             messageProposal.getSender();
 
@@ -75,7 +76,7 @@ public class WaitForProposal extends Behaviour {
             }
         } else if (messageReject != null) {
             JSONObject json = new JSONObject(messageReject.getContent());
-            int offerID = json.getInt("offerID");
+            int offerID = json.getInt(JsonKeys.OFFER_ID);
             System.out.println("Agent " + receiver.getAID().getName() + " otrzymal odmowę wystawiającego id oferty =" + offerID + ": \n" + messageReject.getContent() + "\n");
             isDone = true;
         } else {

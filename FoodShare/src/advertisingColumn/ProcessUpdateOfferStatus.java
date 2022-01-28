@@ -2,6 +2,7 @@ package advertisingColumn;
 
 import advertisingColumn.data.Offer;
 import advertisingColumn.data.OfferStatus;
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -16,7 +17,7 @@ public class ProcessUpdateOfferStatus extends OneShotBehaviour {
         this.advertisingColumn = advertisingColumn;
         this.message = message;
         JSONObject json = new JSONObject(message.getContent());
-        this.offerID = json.getInt("offerID");
+        this.offerID = json.getInt(JsonKeys.OFFER_ID);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class ProcessUpdateOfferStatus extends OneShotBehaviour {
         ACLMessage confirmation;
         String content;
         JSONObject conf = new JSONObject();
-        conf.put("message", "Status updated");
+        conf.put(JsonKeys.MESSAGE, "Status updated");
         content = conf.toString();
 
         confirmation = new ACLMessage(ACLMessage.AGREE);

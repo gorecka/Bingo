@@ -26,10 +26,10 @@ public class WaitForReceiverResignationConfirmation extends Behaviour {
         if (message != null) {
             System.out.println("Agent " + giver.getAID().getName() + " otrzymal informacje od słupa o usunięciu odbiorcy z listy");
             isDone = true;
-    } else {
-        System.out.println("Agent " + giver.getAID().getName() + " nie dostal potwierdzenia od słupa o usunięciu odbiorcy z listy");
-        block();
-    }
+        } else {
+            System.out.println("Agent " + giver.getAID().getName() + " nie dostal potwierdzenia od słupa o usunięciu odbiorcy z listy");
+            block();
+        }
     }
 
     @Override

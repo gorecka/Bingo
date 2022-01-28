@@ -1,5 +1,6 @@
 package giver;
 
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -24,8 +25,8 @@ public class SendResignationToReceiver extends OneShotBehaviour {
         // przygotowanie wiadomości
         ACLMessage message;
         JSONObject content = new JSONObject();
-        content.put("offerID", offerID);
-        content.put("id wystawiającego", giver.getAID());
+        content.put(JsonKeys.OFFER_ID, offerID);
+        content.put(JsonKeys.OFFER_AUTHOR, giver.getAID().getLocalName());
 
         message = new ACLMessage(ACLMessage.INFORM);
         message.setOntology(OntologyNames.COLLECTION_DETAILS_ONTOLOGY);

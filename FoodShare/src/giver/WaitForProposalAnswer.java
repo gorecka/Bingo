@@ -1,5 +1,6 @@
 package giver;
 
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -38,19 +39,19 @@ public class WaitForProposalAnswer extends Behaviour {
             System.out.println("Agent " + giver.getAID().getName() + " otrzymal akceptację terminu -> wysyłam informacje do słupa ");
             isDone = true;
             JSONObject json = new JSONObject(messageAccept.getContent());
-            giver.addBehaviour(new SendCollectionDetails(giver, messageAccept.getSender(), json.getInt("offerID")));
+            giver.addBehaviour(new SendCollectionDetails(giver, messageAccept.getSender(), json.getInt(JsonKeys.OFFER_ID)));
         } else if (messageReject != null) {
             System.out.println("Agent " + giver.getAID().getName() + " otrzymal odmowę terminu - koniec negocjacji");
             isDone = true;
             JSONObject json = new JSONObject(messageReject.getContent());
-            giver.addBehaviour(new SendRequestForRemovingReceiver(giver, messageReject.getSender(), json.getInt("offerID")));
+            giver.addBehaviour(new SendRequestForRemovingReceiver(giver, messageReject.getSender(), json.getInt(JsonKeys.OFFER_ID)));
         } else if (messageCFP != null) {
             System.out.println("Agent " + giver.getAID().getName() + " otrzymal CFP - podejmuję decyzję czy kontyuować negocjacje");
             JSONObject json = new JSONObject(messageCFP.getContent());
             if (refuseCFP) {
                 System.out.println("Rezygnuję z odbierającego");
-                giver.addBehaviour(new SendRequestForRemovingReceiver(giver, messageCFP.getSender(), json.getInt("offerID")));
-                giver.addBehaviour(new SendResignationToReceiver(giver, messageCFP.getSender(), json.getInt("offerID")));
+                giver.addBehaviour(new SendRequestForRemovingReceiver(giver, messageCFP.getSender(), json.getInt(JsonKeys.OFFER_ID)));
+                giver.addBehaviour(new SendResignationToReceiver(giver, messageCFP.getSender(), json.getInt(JsonKeys.OFFER_ID)));
             } else {
                 System.out.println("Proponuję nowy termin");
                 giver.addBehaviour(new SendProposal(giver, messageCFP.getSender()));

@@ -1,5 +1,6 @@
 package advertisingColumn;
 
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -19,7 +20,7 @@ public class ProcessResignation extends OneShotBehaviour {
     @Override
     public void action() {
         JSONObject json = new JSONObject(message.getContent());
-        AID receiver = new AID(json.getString("receiverName"), AID.ISGUID);
+        AID receiver = new AID(json.getString(JsonKeys.OFFER_RECEIVER_NAME), AID.ISGUID);
         boolean isChose = true;
         AID giver = new AID("W1", AID.ISLOCALNAME);
 
@@ -30,8 +31,8 @@ public class ProcessResignation extends OneShotBehaviour {
             String notification;
             JSONObject obj = new JSONObject();
 
-            obj.put("receiverName", receiver.getName());
-            obj.put("offerID", json.getInt("offerID"));
+            obj.put(JsonKeys.OFFER_RECEIVER_NAME, receiver.getName());
+            obj.put(JsonKeys.OFFER_ID, json.getInt(JsonKeys.OFFER_ID));
             notification = obj.toString();
             notifyGiver = new ACLMessage(ACLMessage.INFORM);
             notifyGiver.setContent(notification);
@@ -48,8 +49,8 @@ public class ProcessResignation extends OneShotBehaviour {
         ACLMessage confirmation;
         String content;
         JSONObject conf = new JSONObject();
-        conf.put("message", "Deleted from possible receivers list");
-        conf.put("offerID", json.getInt("offerID"));
+        conf.put(JsonKeys.MESSAGE, "Deleted from possible receivers list");
+        conf.put(JsonKeys.OFFER_ID, json.getInt(JsonKeys.OFFER_ID));
         content = conf.toString();
 
         confirmation = new ACLMessage(ACLMessage.AGREE);

@@ -1,5 +1,6 @@
 package giver;
 
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -22,10 +23,10 @@ public class SendCollectionDetails extends OneShotBehaviour {
         //String content = "miejsce X, godzina Y";
 
         JSONObject content = new JSONObject();
-        content.put("offerID", offerID);
-        content.put("place", "miejsce A");
-        content.put("date", "20.01.2022 05:00:00 PM");
-        content.put("receiverID", receiverID.toString());
+        content.put(JsonKeys.OFFER_ID, offerID);
+        content.put(JsonKeys.OFFER_RECEIPT_PLACE, "miejsce A");
+        content.put(JsonKeys.OFFER_RECEIPT_DATE, "20.01.2022 05:00:00 PM");
+        content.put(JsonKeys.OFFER_CHOSEN_RECEIVER, receiverID.toString());
 
         // przygotowanie wiadomości i wysłanie jej do słupa ogłoszeniowego
         ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);

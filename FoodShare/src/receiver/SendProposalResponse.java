@@ -1,5 +1,6 @@
 package receiver;
 
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -46,7 +47,7 @@ public class SendProposalResponse extends OneShotBehaviour {
 
         message.setOntology(OntologyNames.COLLECTION_DETAILS_ONTOLOGY);
         JSONObject content = new JSONObject();
-        content.put("offerID", offerID);
+        content.put(JsonKeys.OFFER_ID, offerID);
         message.setContent(content.toString());
         message.addReceiver(giverSender);
         receiver.send(message);

@@ -9,7 +9,14 @@ public final class JsonKeys {
     public static final String OFFER_BEST_BEFORE_DATE = "bestBeforeDate";
     public static final String OFFER_DESCRIPTION = "description";
 
+    public static final String OFFER_RECEIPT_PLACE = "receiptPlace";
+    public static final String OFFER_RECEIPT_DATE = "receiptDate";
+    public static final String OFFER_CHOSEN_RECEIVER = "chosenReceiver";
+    public static final String OFFER_RECEIVER_NAME = "receiverName";
+
     public static final String POSSIBLE_RECEIVERS_LIST = "possibleReceivers";
     public static final String MY_PUBLISHED_OFFERS_LIST = "myPublishedOffers";
     public static final String ALL_PUBLISHED_OFFERS_LIST = "allPublishedOffers";
+
+    public static final String MESSAGE = "message";
 }
