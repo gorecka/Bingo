@@ -5,6 +5,8 @@ import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class WaitForListOfPossibleReceivers extends Behaviour {
     boolean isDone = false;
@@ -28,8 +30,18 @@ public class WaitForListOfPossibleReceivers extends Behaviour {
             System.out.println("Treść wiadomości: " + message.getContent());
             int performative = message.getPerformative();
             if (performative == ACLMessage.INFORM) {
-                System.out.println("Otrzymano listę chętnych (lista może być pusta)");
-                //TODO: można wyświetlić listę + przekazać id oferty dla której otrzymano listę chętnych
+                JSONObject content = new JSONObject(message.getContent());
+                int offerId = content.getInt("offerId");
+                JSONArray receiversList = content.getJSONArray("possibleReceivers");
+
+                // wyświetlenie otrzymanej listy chętnych
+                System.out.println("Otrzymano listę chętnych (lista może być pusta) do oferty " + offerId + ": ");
+                int counter = 1;
+                for(Object receiver : receiversList){
+                    System.out.println(counter + ". " + receiver);
+                    ++counter;
+                }
+
 //                giver.addBehaviour(new SendProposal(giver));
                 giver.addBehaviour(new SendProposal(giver, new AID("R1", AID.ISLOCALNAME), 1));
             } else if (performative == ACLMessage.REFUSE) {

@@ -43,16 +43,21 @@ public class AdvertisingColumnAgent extends Agent {
     }
 
     public Offer getOfferById(int offerId) {
-        Offer myOffer = new Offer();
-        //Offer offer1 = new Offer(1, "name", "description", OfferStatus.NEW, new Date(), new User(), ItemStatus.FRESH);
-        //offers.add(offer1);
+        // dodawanie jednej oferty na potrzeby testów
+        User user = new User("user1");
+        Offer offer1 = new Offer(2345, "name", "description", OfferStatus.NEW, new Date(), user, ItemStatus.FRESH);
+        List<User> possibleReceivers = new ArrayList<>();
+        possibleReceivers.add(new User("user2"));
+        possibleReceivers.add(new User("suspendedUser3"));
+        offer1.setPossibleReceivers(possibleReceivers);
+
+        offers.add(offer1);
         for (Offer offer : offers) {
             if (offer.getOfferId() == offerId) {
-                myOffer = offer;
-                break;
+                return offer;
             }
         }
-        return myOffer;
+        return null;
     }
 
     public void updateOffer(Offer newOffer) {

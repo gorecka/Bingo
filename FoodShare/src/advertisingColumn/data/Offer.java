@@ -41,6 +41,7 @@ public class Offer {
         creationDate = new Date();
         this.author = author;
         this.itemStatus = itemStatus;
+        this.possibleReceivers = new ArrayList<>();
     }
 
     public Offer(JSONObject offerJson, User giverUser) throws ParseException {

@@ -1,10 +1,15 @@
 package advertisingColumn;
 
+import advertisingColumn.data.Offer;
+import advertisingColumn.data.User;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GetPossibleReceivers extends OneShotBehaviour {
     AdvertisingColumnAgent advertisingColumn;
@@ -20,32 +25,46 @@ public class GetPossibleReceivers extends OneShotBehaviour {
         // przetworzenie otrzymanej wiadomości
         String ontology = message.getOntology();
         AID giverAgentName = message.getSender();
-        String content = message.getContent(); // w treści wiadomości informacja o tym której oferty dotyczy wiadomość
+        JSONObject content = new JSONObject(message.getContent()); // w treści wiadomości informacja o tym której oferty dotyczy wiadomość
         System.out.println("Wiadomość otrzymana od wystawiajacego: " + content);
-
-        // pobranie listy chętnych, którzy zgłosili się do oferty
-        // TODO
-        JSONObject possibleReceivers = new JSONObject();
-        JSONArray possibleReceiversArray = new JSONArray();
-
-        possibleReceiversArray.put("user1");
-        possibleReceiversArray.put("user2");
-        possibleReceiversArray.put("user3");
-
-        possibleReceivers.put("possibleReceivers", possibleReceiversArray);
-
-        boolean isOperationSuccessful = true;
+        int offerId = content.getInt("offerId");
+        Offer offer = advertisingColumn.getOfferById(offerId);
 
         ACLMessage reply;
         String replyContent;
-        if (isOperationSuccessful) {
-            System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle wiadomosc do wystawiajacego - pobrano listę chętnych");
-            reply = new ACLMessage(ACLMessage.INFORM);
-            replyContent = possibleReceivers.toString();
-        } else {
-            System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle wiadomosc do wystawiajacego - wystąpił błąd przy pobieraniu listy chętnych");
+
+        if (offer == null) {
+            // REFUSE - wystąpił błąd, nie znaleziono oferty o podanym Id
+            System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle wiadomosc do wystawiajacego - wystąpił błąd przy pobieraniu listy chętnych, nie znaleziono oferty z podanym id");
             reply = new ACLMessage(ACLMessage.REFUSE);
-            replyContent = "Wystąpił błąd przy pobieraniu listy ofert";
+            replyContent = "Wystąpił błąd przy pobieraniu listy chętnych - nie znaleziono oferty z podanym id";
+        } else {
+            // sprawdzenie, czy nadawca wiadomości jest autorem ogłoszenia
+            String offerAuthor = offer.getAuthor().getUsername();
+            boolean isAuthor = offerAuthor.equals(giverAgentName.getLocalName());
+            if (!isAuthor) {
+                // REFUSE - nadawca nie może otrzymać informacji o zgłoszonych do oferty, bo nie jest jej autorem
+                System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle wiadomosc do wystawiajacego - wystąpił błąd przy pobieraniu listy chętnych, nadawca nie jest autorem oferty");
+                reply = new ACLMessage(ACLMessage.REFUSE);
+                replyContent = "Wystąpił błąd przy pobieraniu listy chętnych - nadawca nie jest autorem oferty";
+
+            } else {
+                // pobranie listy chętnych, którzy zgłosili się do oferty
+                List<User> possibleReceivers = offer.getPossibleReceivers();
+                JSONObject replyJson = new JSONObject();
+                JSONArray possibleReceiversArray = new JSONArray();
+
+                for (User receiver : possibleReceivers) {
+                    String receiverName = receiver.getUsername();
+                    possibleReceiversArray.put(receiverName);
+                }
+                replyJson.put("offerId", offerId);
+                replyJson.put("possibleReceivers", possibleReceiversArray);
+
+                System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle wiadomosc do wystawiajacego - pobrano listę chętnych");
+                reply = new ACLMessage(ACLMessage.INFORM);
+                replyContent = replyJson.toString();
+            }
         }
         reply.addReceiver(giverAgentName);
         reply.setOntology(ontology);
