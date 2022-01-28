@@ -1,6 +1,7 @@
 package advertisingColumn;
 
 import advertisingColumn.data.Offer;
+import communicationConstants.JsonKeys;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -39,7 +40,7 @@ public class GetMyPublishedOffers extends OneShotBehaviour {
             for (Offer offer : myOffers) {
                 myPublishedOffers.put(offer.toJSON());
             }
-            myOffersJson.put("myPublishedOffers", myPublishedOffers);
+            myOffersJson.put(JsonKeys.MY_PUBLISHED_OFFERS_LIST, myPublishedOffers);
 
             System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle wiadomosc do wystawiajacego - pobrano listę ofert");
             reply = new ACLMessage(ACLMessage.INFORM);

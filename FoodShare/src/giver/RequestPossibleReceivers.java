@@ -1,5 +1,6 @@
 package giver;
 
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -17,7 +18,7 @@ public class RequestPossibleReceivers extends OneShotBehaviour {
     public void action() {
 
         JSONObject jsonContent = new JSONObject();
-        jsonContent.put("offerId", "2345");
+        jsonContent.put(JsonKeys.OFFER_ID, "2345");
         String content = jsonContent.toString();
 
         System.out.println(giver.getAID().getName() + " zaraz wysle prosbe o listę chętnych");

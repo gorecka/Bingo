@@ -1,5 +1,6 @@
 package giver;
 
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -18,7 +19,7 @@ public class DeleteOffer extends OneShotBehaviour {
     @Override
     public void action() {
         JSONObject content = new JSONObject();
-        content.put("offerId", offerId);
+        content.put(JsonKeys.OFFER_ID, offerId);
 
         System.out.println(giver.getAID().getName() + " sending DeleteOffer request");
         // przygotowanie wiadomości i wysłanie jej do słupa ogłoszeniowego

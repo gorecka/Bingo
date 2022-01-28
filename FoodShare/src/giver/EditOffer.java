@@ -1,6 +1,7 @@
 package giver;
 
 import advertisingColumn.data.ItemStatus;
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -34,11 +35,11 @@ public class EditOffer extends OneShotBehaviour {
 
     JSONObject prepareOffer() {
         JSONObject offer = new JSONObject();
-        offer.put("offerId", offerId);
-        offer.put("name", "ser");
-        offer.put("itemStatus", ItemStatus.CLOSE_EXPIRATION);
-        offer.put("bestBeforeDate", "02-02-2022");
-        offer.put("description", "dobry ser");
+        offer.put(JsonKeys.OFFER_ID, offerId);
+        offer.put(JsonKeys.OFFER_NAME, "ser");
+        offer.put(JsonKeys.OFFER_ITEM_STATUS, ItemStatus.CLOSE_EXPIRATION);
+        offer.put(JsonKeys.OFFER_BEST_BEFORE_DATE, "02-02-2022");
+        offer.put(JsonKeys.OFFER_DESCRIPTION, "dobry ser");
         return offer;
     }
 }

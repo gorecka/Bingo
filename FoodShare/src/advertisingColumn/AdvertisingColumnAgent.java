@@ -37,7 +37,7 @@ public class AdvertisingColumnAgent extends Agent {
 //                activeOffers.add(o);
 //            }
 //        }
-        Offer offer1 = new Offer(1, "name", "description", OfferStatus.NEW, new Date(), new User(), ItemStatus.FRESH);
+        Offer offer1 = new Offer(1, "name", "description", OfferStatus.NEW, new Date(), new User("user1"), ItemStatus.FRESH);
         activeOffers.add(offer1);
         return activeOffers;
     }

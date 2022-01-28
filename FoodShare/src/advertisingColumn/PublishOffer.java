@@ -1,6 +1,7 @@
 package advertisingColumn;
 
 import advertisingColumn.data.User;
+import communicationConstants.JsonKeys;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -52,7 +53,7 @@ public class PublishOffer extends OneShotBehaviour {
                     System.out.println(advertisingColumn.getAID().getName() + " failed to parse bestBeforeDate");
                 }
                 JSONObject publishedOffer = new JSONObject();
-                publishedOffer.put("offerID", publishedOfferId);
+                publishedOffer.put(JsonKeys.OFFER_ID, publishedOfferId);
                 replyContent = publishedOffer.toString();
 
                 System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle wiadomosc do wystawiajacego - oferta zostala dodana");

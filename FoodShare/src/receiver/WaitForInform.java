@@ -1,5 +1,6 @@
 package receiver;
 
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -31,11 +32,11 @@ public class WaitForInform extends CyclicBehaviour {
             // decyzja co powinien zrobić odbiorca
             switch (ontology) {
                 case OntologyNames.EDITING_OFFER_ONTOLOGY:
-                    System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o zmianie w ofercie " + content.get("offerId"));
+                    System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o zmianie w ofercie " + content.get(JsonKeys.OFFER_ID));
                     System.out.println("content: " + content);
                     break;
                 case OntologyNames.DELETING_OFFER_ONTOLOGY:
-                    System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o usunięciu oferty " + content.get("offerId"));
+                    System.out.println("Agent " + receiver.getAID().getName() + " został poinformowany o usunięciu oferty " + content.get(JsonKeys.OFFER_ID));
                     System.out.println("content: " + content);
                     break;
                 case OntologyNames.COLLECTION_DETAILS_ONTOLOGY:

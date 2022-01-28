@@ -3,6 +3,7 @@ package advertisingColumn;
 import advertisingColumn.data.ItemStatus;
 import advertisingColumn.data.Offer;
 import advertisingColumn.data.User;
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -27,11 +28,11 @@ public class ProcessUpdateOffer extends OneShotBehaviour {
         AID giver = message.getSender();
         System.out.println(advertisingColumn.getAID().getName() + " ProcessUpdateOffer from " + giver.getName());
         JSONObject content = new JSONObject(message.getContent());
-        int offerId = content.getInt("offerId");
+        int offerId = content.getInt(JsonKeys.OFFER_ID);
 
         ACLMessage reply = message.createReply();
         JSONObject replyContent = new JSONObject();
-        replyContent.put("offerId", offerId);
+        replyContent.put(JsonKeys.OFFER_ID, offerId);
 
         Offer offer = advertisingColumn.getOfferById(offerId);
 
@@ -45,10 +46,10 @@ public class ProcessUpdateOffer extends OneShotBehaviour {
             if (message.getOntology().equals(OntologyNames.EDITING_OFFER_ONTOLOGY)) {
                 // edit the offer
                 try {
-                    offer.setBestBeforeDate(content.getString("bestBeforeDate"));
-                    offer.setDescription(content.getString("description"));
-                    offer.setItemStatus(content.getEnum(ItemStatus.class, "itemStatus"));
-                    offer.setName(content.getString("name"));
+                    offer.setBestBeforeDate(content.getString(JsonKeys.OFFER_BEST_BEFORE_DATE));
+                    offer.setDescription(content.getString(JsonKeys.OFFER_DESCRIPTION));
+                    offer.setItemStatus(content.getEnum(ItemStatus.class, JsonKeys.OFFER_ITEM_STATUS));
+                    offer.setName(content.getString(JsonKeys.OFFER_NAME));
                     advertisingColumn.updateOffer(offer);
                 } catch (ParseException e) {
                     System.out.println(advertisingColumn.getAID().getName() + " failed to parse bestBeforeDate");

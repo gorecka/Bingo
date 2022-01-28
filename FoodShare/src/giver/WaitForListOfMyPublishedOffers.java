@@ -50,7 +50,7 @@ public class WaitForListOfMyPublishedOffers extends Behaviour {
 
     private void printReceivedOffers(String offersString) {
         JSONObject offersJson = new JSONObject(offersString);
-        JSONArray offersArray = offersJson.getJSONArray("myPublishedOffers");
+        JSONArray offersArray = offersJson.getJSONArray(JsonKeys.MY_PUBLISHED_OFFERS_LIST);
 
         if(offersArray.isEmpty()){
             System.out.println("Brak opublikowanych ofert");

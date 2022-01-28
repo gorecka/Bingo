@@ -2,6 +2,7 @@ package advertisingColumn;
 
 import advertisingColumn.data.Offer;
 import advertisingColumn.data.User;
+import communicationConstants.JsonKeys;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -27,7 +28,7 @@ public class GetPossibleReceivers extends OneShotBehaviour {
         AID giverAgentName = message.getSender();
         JSONObject content = new JSONObject(message.getContent()); // w treści wiadomości informacja o tym której oferty dotyczy wiadomość
         System.out.println("Wiadomość otrzymana od wystawiajacego: " + content);
-        int offerId = content.getInt("offerId");
+        int offerId = content.getInt(JsonKeys.OFFER_ID);
         Offer offer = advertisingColumn.getOfferById(offerId);
 
         ACLMessage reply;
@@ -58,8 +59,8 @@ public class GetPossibleReceivers extends OneShotBehaviour {
                     String receiverName = receiver.getUsername();
                     possibleReceiversArray.put(receiverName);
                 }
-                replyJson.put("offerId", offerId);
-                replyJson.put("possibleReceivers", possibleReceiversArray);
+                replyJson.put(JsonKeys.OFFER_ID, offerId);
+                replyJson.put(JsonKeys.POSSIBLE_RECEIVERS_LIST, possibleReceiversArray);
 
                 System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle wiadomosc do wystawiajacego - pobrano listę chętnych");
                 reply = new ACLMessage(ACLMessage.INFORM);

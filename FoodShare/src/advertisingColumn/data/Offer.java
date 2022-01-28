@@ -48,12 +48,12 @@ public class Offer {
     public Offer(JSONObject offerJson, User giverUser) throws ParseException {
         this.offerId = nextOfferId;
         nextOfferId += 1;
-        this.name = offerJson.getString("name");
-        this.description = offerJson.getString("description");
+        this.name = offerJson.getString(JsonKeys.OFFER_NAME);
+        this.description = offerJson.getString(JsonKeys.OFFER_DESCRIPTION);
         this.offerStatus = OfferStatus.NEW;
-        this.itemStatus = offerJson.getEnum(ItemStatus.class, "itemStatus");
+        this.itemStatus = offerJson.getEnum(ItemStatus.class, JsonKeys.OFFER_ITEM_STATUS);
 
-        String bestBeforeDateString = offerJson.getString("bestBeforeDate");
+        String bestBeforeDateString = offerJson.getString(JsonKeys.OFFER_BEST_BEFORE_DATE);
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         this.bestBeforeDate = formatter.parse(bestBeforeDateString);
 

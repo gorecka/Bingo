@@ -1,6 +1,7 @@
 package advertisingColumn;
 
 import advertisingColumn.data.Offer;
+import communicationConstants.JsonKeys;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -24,29 +25,27 @@ public class GetAllPublishedOffers extends OneShotBehaviour {
         String ontology = message.getOntology();
         AID receiverAgentName = message.getSender();
 
+        ACLMessage reply;
+        String replyContent;
+
         // pobranie listy aktualnych ofert dodanych przez wszystkich wstawiających
         // TODO: tworzenie listy json'ów można przenieść do metody getActiveOffers w advertisingColumn
         List<Offer> listOfAllPublishedOffers = advertisingColumn.getActiveOffers();
-        JSONObject allOffers = new JSONObject();
-        JSONArray publishedOffers = new JSONArray();
-        for (Offer o : listOfAllPublishedOffers) {
-            publishedOffers.put(o.toJSON());
-        }
-
-        allOffers.put("AllPublishedOffers", publishedOffers);
-
-        boolean isOperationSuccessful = true;
-
-        ACLMessage reply;
-        String replyContent;
-        if (isOperationSuccessful) {
-            System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle wiadomosc do odbierajacego - pobrano listę ofert");
-            reply = new ACLMessage(ACLMessage.INFORM);
-            replyContent = allOffers.toString();
-        } else {
+        if (listOfAllPublishedOffers == null) {
             System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle wiadomosc do odbierajacego - wystąpił błąd przy pobieraniu listy ofert");
             reply = new ACLMessage(ACLMessage.REFUSE);
             replyContent = "Wystąpił błąd przy pobieraniu listy ofert";
+        } else {
+            JSONObject allOffers = new JSONObject();
+            JSONArray publishedOffers = new JSONArray();
+            for (Offer o : listOfAllPublishedOffers) {
+                publishedOffers.put(o.toJSON());
+            }
+            allOffers.put(JsonKeys.ALL_PUBLISHED_OFFERS_LIST, publishedOffers);
+
+            System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle wiadomosc do odbierajacego - pobrano listę ofert");
+            reply = new ACLMessage(ACLMessage.INFORM);
+            replyContent = allOffers.toString();
         }
         reply.addReceiver(receiverAgentName);
         reply.setOntology(ontology);
