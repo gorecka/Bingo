@@ -98,9 +98,10 @@ public class AdvertisingColumnAgent extends Agent {
         User user = new User("user1");
         Offer offer1 = new Offer(2345, "ser", "ser w plastrach", OfferStatus.NEW, new Date(), user, ItemStatus.FRESH);
         List<User> possibleReceivers = new ArrayList<>();
-//        possibleReceivers.add(new User("user2"));
+        possibleReceivers.add(new User("user2"));
         possibleReceivers.add(new User("suspendedUser3"));
         offer1.setPossibleReceivers(possibleReceivers);
+        offer1.setChosenReceiver(new User("user2"));
         offers.add(offer1);
     }
 

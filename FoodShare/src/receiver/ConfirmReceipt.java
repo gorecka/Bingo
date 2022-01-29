@@ -1,5 +1,6 @@
 package receiver;
 
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -22,10 +23,10 @@ public class ConfirmReceipt extends OneShotBehaviour {
         ACLMessage message;
         String content;
         JSONObject json = new JSONObject();
-        json.put("offerID", offerID);
+        json.put(JsonKeys.OFFER_ID, offerID);
         content = json.toString();
 
-        message = new ACLMessage(ACLMessage.INFORM);
+        message = new ACLMessage(ACLMessage.REQUEST);
         message.setOntology(OntologyNames.CONFIRMATION_OF_RECEIPT);
         message.setContent(content);
         message.addReceiver(new AID("Slup", AID.ISLOCALNAME));

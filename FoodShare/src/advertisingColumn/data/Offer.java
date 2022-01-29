@@ -116,6 +116,11 @@ public class Offer {
         possibleReceivers.add(receiverUser);
     }
 
+    public void closeOffer(){
+        receiptConfirmationDate = new Date();
+        offerStatus = OfferStatus.CLOSED;
+    }
+
     public int getOfferId() {
         return offerId;
     }
