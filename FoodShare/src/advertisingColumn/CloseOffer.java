@@ -41,14 +41,11 @@ public class CloseOffer extends OneShotBehaviour {
             response = new ACLMessage(ACLMessage.REFUSE);
             obj.put(JsonKeys.MESSAGE, "Offer with the given id was not found");
             response.addReceiver(new AID(receiver.getLocalName(), AID.ISLOCALNAME));
-            System.out.println("Offer with the given id was not found"); // usunąć
         } else {
             String chosenReceiverName = offer.getChosenReceiver().getUsername();
             if (chosenReceiverName.equals(receiver.getLocalName())) {
                 // INFORM - zmiana statusu oferty i ustawienie daty potwierdzenia odbioru, odpowiedź do wszystkich odbiorców z listy chętnych
-                System.out.println(offer); // usunąć
                 offer.closeOffer();
-                System.out.println(offer); // usunąć
                 response = new ACLMessage(ACLMessage.INFORM);
                 obj.put(JsonKeys.MESSAGE, "Offer closed");
                 // pobranie listy chętnych, którzy zgłosili się do oferty
@@ -56,13 +53,11 @@ public class CloseOffer extends OneShotBehaviour {
                 for (User possibleReceiver : possibleReceivers) {
                     response.addReceiver(new AID(possibleReceiver.getUsername(), AID.ISLOCALNAME));
                 }
-                System.out.println("Offer closed"); // usunąć
             } else {
                 // REFUSE - użytkownik który chce potwierdzić odbiór nie jest wybranym odbiorcą, odpowiedź tylko to 1 odbiorcy, ktory wysłał wiadomość
                 response = new ACLMessage(ACLMessage.REFUSE);
                 obj.put(JsonKeys.MESSAGE, "User who wants to confirm receipt is not the chosen recipient");
                 response.addReceiver(new AID(receiver.getLocalName(), AID.ISLOCALNAME));
-                System.out.println("User who wants to confirm receipt is not the chosen recipient"); // usunąć
             }
         }
 

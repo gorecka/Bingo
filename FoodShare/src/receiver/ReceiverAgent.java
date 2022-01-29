@@ -6,7 +6,7 @@ public class ReceiverAgent extends Agent {
     protected void setup() {
 
         System.out.println("Cześć, tu " + getAID().getName() + " !");
-        addBehaviour(new WaitForInform(this));
+        addBehaviour(new WaitForResult(this));
 //        addBehaviour(new RequestAllPublishedOffers(this));
 //        addBehaviour(new WaitForProposal(this));
 //        addBehaviour(new SignUpForOffer(this, "2345"));
