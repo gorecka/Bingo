@@ -24,10 +24,6 @@ public class WaitForResignation extends CyclicBehaviour {
             System.out.println("Agent " + giver.getAID().getName() + " otrzymal informacje o rezygnacji z oferty ");
             System.out.println("Treść wiadomości: " + message.getContent());
 
-            //uaktualnienie jego listy chetnych??
-            //TODO
-
-
         } else {
             System.out.println("Agent " + giver.getAID().getName() + " nie dostal rezygnacji z oferty - blokada");
             block();
