@@ -1,11 +1,15 @@
 package advertisingColumn;
 
+import advertisingColumn.data.Offer;
+import advertisingColumn.data.User;
 import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class ProcessResignation extends OneShotBehaviour {
     AdvertisingColumnAgent advertisingColumn;
@@ -21,11 +25,17 @@ public class ProcessResignation extends OneShotBehaviour {
     public void action() {
         JSONObject json = new JSONObject(message.getContent());
         AID receiver = new AID(json.getString(JsonKeys.OFFER_RECEIVER_NAME), AID.ISGUID);
-        boolean isChose = true;
-        AID giver = new AID("W1", AID.ISLOCALNAME);
+        int offerId = Integer.parseInt(json.getString(JsonKeys.OFFER_ID));
+        Offer offer = advertisingColumn.getOfferById(offerId);
 
-        // sprawdzenie, czy wybrany do oferty i kto wystawia
-        //TODO
+        //sprawdzenie, czy rezygnujacy zostal wybrany do oferty
+        boolean isChose = offer.getChosenReceiver().getUsername().equals(receiver.getLocalName());
+
+        //znaleznienie wystawiajacego
+        AID giver = new AID(offer.getAuthor().getUsername(), AID.ISLOCALNAME);
+
+
+
         if(isChose) {
             ACLMessage notifyGiver;
             String notification;
@@ -42,8 +52,8 @@ public class ProcessResignation extends OneShotBehaviour {
 
         }
         //usun uzytkownika z listy chetnych
-        // TODO
-
+        offer.getPossibleReceivers().removeIf(user -> user.getUsername().equals(receiver.getLocalName()));
+        advertisingColumn.updateOffer(offer);
 
         //wyslanie potwierdzenia usuniecia z listy chetnych
         ACLMessage confirmation;
