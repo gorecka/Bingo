@@ -1,6 +1,7 @@
 package advertisingColumn;
 
 import advertisingColumn.data.Offer;
+import advertisingColumn.data.User;
 import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
@@ -31,22 +32,13 @@ public class ProcessReviewForm extends OneShotBehaviour {
         int offerId = Integer.parseInt(obj.getString(JsonKeys.OFFER_ID));
         Offer offer = advertisingColumn.getOfferById(offerId);
 
-        // pobranie obecnej oceny wystawiajacego
-        offer.getAuthor().addRating(score);
-        int ratingCount = offer.getAuthor().getRatingCount();
-        double avg = (double) offer.getAuthor().getRatingSum() / ratingCount;
-        if (ratingCount > 2 && avg < 2) {
-            Date dt = new Date();
-            offer.getAuthor().setSuspended(true);
-            offer.getAuthor().setSuspensionStart(dt);
-            Calendar c = Calendar.getInstance();
-            c.setTime(dt);
-            c.add(Calendar.DATE, 7);
-            dt = c.getTime();
-            offer.getAuthor().setSuspensionEnd(dt );
-        }
+        String authorName = offer.getAuthor().getUsername();
+        User author = advertisingColumn.getUserByName(authorName);
+        //dodanie oceny na uzytkownika
+        User updatedUser = advertisingColumn.addReviewForUser(author, score);
+        double avg = (double) updatedUser.getRatingSum()/updatedUser.getRatingCount();
 
-        boolean isBlocked = offer.getAuthor().isSuspended();
+        boolean isBlocked = updatedUser.isSuspended();
         System.out.println("Wysle ankiete do " + giver);
 
         System.out.println("Ocena: " + avg + " Czy blokada? "  + isBlocked);
@@ -54,7 +46,7 @@ public class ProcessReviewForm extends OneShotBehaviour {
         ACLMessage reply;
         String replyContent;
         JSONObject json = new JSONObject();
-        json.put(JsonKeys.OFFER_REVIEW, Double.toString(score));
+        json.put(JsonKeys.OFFER_REVIEW, Integer.toString(score));
         json.put(JsonKeys.OFFER_REVIEWER, message.getSender().getLocalName());
         json.put(JsonKeys.USER_RATING_AVERAGE, Double.toString(avg));
         json.put(JsonKeys.USER_IS_BLOCKED, Boolean.toString(isBlocked));

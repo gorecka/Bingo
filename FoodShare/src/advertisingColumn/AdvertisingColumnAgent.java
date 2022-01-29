@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +32,6 @@ public class AdvertisingColumnAgent extends Agent {
 
     protected List<Offer> getActiveOffers() {
         List<Offer> activeOffers = new ArrayList<>();
-        ;
         // TODO: Docelowo pętlę for odkomentować, a usunąć linię 36 i 37
 //        for (Offer o : offers) {
 //            if(o.getOfferStatus() != OfferStatus.WAITING_FOR_GIVER) {
@@ -111,5 +111,31 @@ public class AdvertisingColumnAgent extends Agent {
 
         int offerId = offer.getOfferId();
         return offerId;
+    }
+
+    public User addReviewForUser(User user, int newRating) {
+        User updatedUser = this.addReview(user, newRating);
+        users.forEach(el -> {
+            if (el.getUsername().equals(updatedUser.getUsername()))
+                users.set(users.indexOf(el), updatedUser);
+        });
+        return updatedUser;
+    }
+
+    private User addReview(User user, int newRating) {
+        user.addRating(newRating);
+        //sprawdzenie czy zablokowac uzytkownika
+        if ((double) user.getRatingSum()/user.getRatingCount() < 2.0 && user.getRatingCount() > 2 && user.getNegativeRatingCount() > 2) {
+            Date dt = new Date();
+            user.setSuspended(true);
+            user.setSuspensionStart(dt);
+            Calendar c = Calendar.getInstance();
+            c.setTime(dt);
+            //uzytkownik blokowany na 14 dni
+            c.add(Calendar.DATE, 14);
+            dt = c.getTime();
+            user.setSuspensionEnd(dt);
+        }
+        return user;
     }
 }
