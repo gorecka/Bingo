@@ -69,12 +69,12 @@ public class ProcessResignation extends OneShotBehaviour {
             conf.put(JsonKeys.OFFER_ID, json.getInt(JsonKeys.OFFER_ID));
 
             confirmation = new ACLMessage(ACLMessage.AGREE);
-            confirmation.setOntology(OntologyNames.RESIGNATION_ONTOLOGY);
 
         }
         String content;
         content = conf.toString();
         confirmation.setContent(content);
+        confirmation.setOntology(OntologyNames.RESIGNATION_ONTOLOGY);
         confirmation.addReceiver(message.getSender());
         advertisingColumn.send(confirmation);
     }

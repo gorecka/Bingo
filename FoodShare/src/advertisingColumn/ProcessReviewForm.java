@@ -8,8 +8,6 @@ import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import org.json.JSONObject;
-import java.util.Calendar;
-import java.util.Date;
 
 public class ProcessReviewForm extends OneShotBehaviour {
     AdvertisingColumnAgent advertisingColumn;
