@@ -1,5 +1,6 @@
 package receiver;
 
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -22,8 +23,8 @@ public class ResignFromOffer extends OneShotBehaviour {
         ACLMessage message;
         String content;
         JSONObject json = new JSONObject();
-        json.put("offerID", offerID);
-        json.put("receiverName", receiver.getName());
+        json.put(JsonKeys.OFFER_ID, offerID);
+        json.put(JsonKeys.OFFER_RECEIVER_NAME, receiver.getName());
         content = json.toString();
 
         message = new ACLMessage(ACLMessage.REQUEST);
