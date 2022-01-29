@@ -103,6 +103,19 @@ public class Offer {
                 '}';
     }
 
+    public boolean isReceiverAdded(String username) {
+        for (User user : possibleReceivers) {
+            if (user.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addPossibleReceiver(User receiverUser){
+        possibleReceivers.add(receiverUser);
+    }
+
     public int getOfferId() {
         return offerId;
     }
