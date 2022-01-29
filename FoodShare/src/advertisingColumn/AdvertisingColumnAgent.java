@@ -23,6 +23,7 @@ public class AdvertisingColumnAgent extends Agent {
         addBehaviour(new WaitForRequest(this));
         //addBehaviour(new SendReviewForm(this, new AID("R1", AID.ISLOCALNAME), new AID("W1", AID.ISLOCALNAME).getName(), "Example offer"));
         addUsers();
+        addOffers();
     }
 
     protected void takeDown() {
@@ -43,15 +44,6 @@ public class AdvertisingColumnAgent extends Agent {
     }
 
     public Offer getOfferById(int offerId) {
-        // dodawanie jednej oferty na potrzeby testów
-        User user = new User("user1");
-        Offer offer1 = new Offer(2345, "name", "description", OfferStatus.NEW, new Date(), user, ItemStatus.FRESH);
-        List<User> possibleReceivers = new ArrayList<>();
-        possibleReceivers.add(new User("user2"));
-        possibleReceivers.add(new User("suspendedUser3"));
-        offer1.setPossibleReceivers(possibleReceivers);
-
-        offers.add(offer1);
         for (Offer offer : offers) {
             if (offer.getOfferId() == offerId) {
                 return offer;
@@ -61,17 +53,7 @@ public class AdvertisingColumnAgent extends Agent {
     }
 
     public List<Offer> getOffersByAuthor(String username) {
-        // dodawanie jednej oferty na potrzeby testów
-        User user = new User("user1");
-        Offer offer1 = new Offer(2345, "name", "description", OfferStatus.NEW, new Date(), user, ItemStatus.FRESH);
-        List<User> possibleReceivers = new ArrayList<>();
-        possibleReceivers.add(new User("user2"));
-        possibleReceivers.add(new User("suspendedUser3"));
-        offer1.setPossibleReceivers(possibleReceivers);
-        offers.add(offer1);
-
         List<Offer> userOffers = new ArrayList<>();
-
         for (Offer offer : offers) {
             if (offer.getAuthor().getUsername().equals(username)) {
                 userOffers.add(offer);
@@ -110,6 +92,16 @@ public class AdvertisingColumnAgent extends Agent {
         User suspendedUser = new User("suspendedUser3");
         suspendedUser.setSuspended(true);
         users.add(suspendedUser);
+    }
+
+    private void addOffers() {
+        User user = new User("user1");
+        Offer offer1 = new Offer(2345, "ser", "ser w plastrach", OfferStatus.NEW, new Date(), user, ItemStatus.FRESH);
+        List<User> possibleReceivers = new ArrayList<>();
+//        possibleReceivers.add(new User("user2"));
+        possibleReceivers.add(new User("suspendedUser3"));
+        offer1.setPossibleReceivers(possibleReceivers);
+        offers.add(offer1);
     }
 
     public int publishOffer(String offerString, User giverUser) throws ParseException {

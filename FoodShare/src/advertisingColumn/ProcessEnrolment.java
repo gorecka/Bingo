@@ -1,5 +1,8 @@
 package advertisingColumn;
 
+import advertisingColumn.data.Offer;
+import advertisingColumn.data.User;
+import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
@@ -10,51 +13,54 @@ public class ProcessEnrolment extends OneShotBehaviour {
     AdvertisingColumnAgent advertisingColumn;
     ACLMessage message;
 
-    ProcessEnrolment(AdvertisingColumnAgent agent, ACLMessage msg)
-    {
+    ProcessEnrolment(AdvertisingColumnAgent agent, ACLMessage msg) {
         advertisingColumn = agent;
         message = msg;
     }
 
     @Override
     public void action() {
-        // sprawdzenie, czy wybrany do oferty i kto wystawia
-        //TODO
-        boolean isChose = true;
-        AID giver = new AID("W1", AID.ISLOCALNAME);
+        AID receiver = message.getSender();
+        System.out.println(advertisingColumn.getAID().getName() + " ProcessEnrolment from " + receiver.getName());
+        JSONObject content = new JSONObject(message.getContent());
+        int offerId = content.getInt(JsonKeys.OFFER_ID);
 
-        JSONObject json = new JSONObject(message.getContent());
-        if(isChose) {
-            ACLMessage notifyGiver;
-            String notification;
-            JSONObject obj = new JSONObject();
-
-            obj.put("receiver", message.getSender());
-            obj.put("offerID", json.getString("offerID"));
-            notification = obj.toString();
-            notifyGiver = new ACLMessage(ACLMessage.INFORM);
-            notifyGiver.setContent(notification);
-            notifyGiver.addReceiver(giver);
-            notifyGiver.setOntology(OntologyNames.SIGNING_UP_FOR_OFFER_ONTOLOGY);
-            advertisingColumn.send(notifyGiver);
-
-        }
-        //dodaj uzytkownika do listy chetnych
-        // TODO
-
-
-        //wyslanie potwierdzenia usuniecia z listy chetnych
         ACLMessage confirmation;
-        String content;
         JSONObject conf = new JSONObject();
-        conf.put("message", "Added to possible receivers list");
-        conf.put("offerID", json.getString("offerID"));
-        content = conf.toString();
+        conf.put(JsonKeys.OFFER_ID, offerId);
 
-        confirmation = new ACLMessage(ACLMessage.AGREE);
+        Offer offer = advertisingColumn.getOfferById(offerId);
+        if (offer == null) {
+            // REFUSE - nie znaleziono oferty
+            conf.put(JsonKeys.MESSAGE, "Offer with the given id was not found");
+            confirmation = new ACLMessage(ACLMessage.REFUSE);
+        } else {
+            String receiverName = receiver.getLocalName();
+            boolean isReceiverAdded = offer.isReceiverAdded(receiverName);
+            if (isReceiverAdded) {
+                // REFUSE - użytkownk jest już na liście chętnych
+                conf.put(JsonKeys.MESSAGE, "Receiver is already on possible receivers list");
+                confirmation = new ACLMessage(ACLMessage.REFUSE);
+            } else {
+                User receiverUser = advertisingColumn.getUserByName(receiverName);
+                if (receiverUser == null) {
+                    // REFUSE - nie znaleziono użytkownika
+                    conf.put(JsonKeys.MESSAGE, "User " + receiverName + " was not found");
+                    confirmation = new ACLMessage(ACLMessage.REFUSE);
+                } else {
+                    // AGREE - dodanie użytkownika do listy chętnych
+                    offer.addPossibleReceiver(receiverUser);
+                    conf.put(JsonKeys.MESSAGE, "Added to possible receivers list");
+                    confirmation = new ACLMessage(ACLMessage.AGREE);
+                }
+            }
+        }
+
+        //wyslanie potwierdzenia dodania do listy chetnych
+        String replyContent = conf.toString();
         confirmation.setOntology(OntologyNames.SIGNING_UP_FOR_OFFER_ONTOLOGY);
-        confirmation.setContent(content);
-        confirmation.addReceiver(message.getSender());
+        confirmation.setContent(replyContent);
+        confirmation.addReceiver(receiver);
 
         advertisingColumn.send(confirmation);
     }
