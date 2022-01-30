@@ -39,8 +39,11 @@ public class ProcessResignation extends OneShotBehaviour {
         } else {
 
             //sprawdzenie, czy rezygnujacy zostal wybrany do oferty
-            boolean isChose = offer.getChosenReceiver().getUsername().equals(receiver.getLocalName());
-
+            User chosenReceiver = offer.getChosenReceiver();
+            boolean isChose = false;
+            if (chosenReceiver != null) {
+                isChose = offer.getChosenReceiver().getUsername().equals(receiver.getLocalName());
+            }
             //znaleznienie wystawiajacego
             AID giver = new AID(offer.getAuthor().getUsername(), AID.ISLOCALNAME);
 
