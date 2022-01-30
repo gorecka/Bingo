@@ -126,7 +126,7 @@ public class AdvertisingColumnAgent extends Agent {
     private User addReview(User user, int newRating) {
         user.addRating(newRating);
         //sprawdzenie czy zablokowac uzytkownika
-        if ((double) user.getRatingSum()/user.getRatingCount() < 2.0 && user.getRatingCount() > 2 && user.getNegativeRatingCount() > 2) {
+        if ((double) user.getRatingSum()/user.getRatingCount() < 2.5 && user.getRatingCount() > 2 && user.getNegativeRatingCount() > 2) {
             Date dt = new Date();
             user.setSuspended(true);
             user.setSuspensionStart(dt);
