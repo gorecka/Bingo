@@ -18,7 +18,8 @@ public class User {
             negativeRatingCount++;
     }
 
-    public User() {}
+    public User() {
+    }
 
     public User(String name) {
         username = name;
@@ -26,6 +27,21 @@ public class User {
         ratingCount = 0;
         negativeRatingCount = 0;
         isSuspended = false;
+    }
+
+    public boolean verifyStatus() {
+        if (isSuspended) {
+            Date today = new Date();
+            if (suspensionEnd.before(today)) {
+                // można odblokować konto użytkownika
+                suspensionStart = null;
+                suspensionEnd = null;
+                isSuspended = false;
+                negativeRatingCount = 0;
+                System.out.println("Konto użytkownika " + username + " zostało odblokowane");
+            }
+        }
+        return isSuspended;
     }
 
     public String getUsername() {

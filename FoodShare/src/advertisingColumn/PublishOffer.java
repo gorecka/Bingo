@@ -37,7 +37,8 @@ public class PublishOffer extends OneShotBehaviour {
             reply = new ACLMessage(ACLMessage.REFUSE);
             replyContent = "Nie znaleziono użytkownika który chciał dodać ofertę";
         } else {
-            boolean isAccountSuspended = giverUser.isSuspended();
+            // jeśli minęła data końca blokady konta, to konto jest odblokowywane
+            boolean isAccountSuspended = giverUser.verifyStatus();
 
             if (isAccountSuspended) {
                 // nie można dodać oferty - przygotowanie wiadomości REFUSE
