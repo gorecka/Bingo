@@ -38,7 +38,7 @@ public class AdvertisingColumnAgent extends Agent {
 //                activeOffers.add(o);
 //            }
 //        }
-        Offer offer1 = new Offer(1, "name", "description", OfferStatus.NEW, new Date(), new User("user1"), ItemStatus.FRESH);
+        Offer offer1 = new Offer(1, "name", "description", OfferStatus.OPEN, new Date(), new User("user1"), ItemStatus.FRESH);
         activeOffers.add(offer1);
         return activeOffers;
     }
@@ -96,7 +96,7 @@ public class AdvertisingColumnAgent extends Agent {
 
     private void addOffers() {
         User user = new User("user1");
-        Offer offer1 = new Offer(2345, "ser", "ser w plastrach", OfferStatus.NEW, new Date(), user, ItemStatus.FRESH);
+        Offer offer1 = new Offer(2345, "ser", "ser w plastrach", OfferStatus.OPEN, new Date(), user, ItemStatus.FRESH);
         List<User> possibleReceivers = new ArrayList<>();
         possibleReceivers.add(new User("user2"));
         possibleReceivers.add(new User("suspendedUser3"));

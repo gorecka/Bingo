@@ -50,7 +50,7 @@ public class Offer {
         nextOfferId += 1;
         this.name = offerJson.getString(JsonKeys.OFFER_NAME);
         this.description = offerJson.getString(JsonKeys.OFFER_DESCRIPTION);
-        this.offerStatus = OfferStatus.NEW;
+        this.offerStatus = OfferStatus.OPEN;
         this.itemStatus = offerJson.getEnum(ItemStatus.class, JsonKeys.OFFER_ITEM_STATUS);
 
         String bestBeforeDateString = offerJson.getString(JsonKeys.OFFER_BEST_BEFORE_DATE);
