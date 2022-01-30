@@ -29,7 +29,7 @@ public class SendFilledInReview extends OneShotBehaviour {
         String content = message.getContent();
 
         JSONObject obj = new JSONObject(content);
-        System.out.println("What do you think about " + obj.getString(JsonKeys.OFFER_ID) + " from " + obj.getString(JsonKeys.OFFER_AUTHOR) + obj.getString(JsonKeys.OFFER_REVIEW));
+        System.out.println("What do you think about " + obj.getInt(JsonKeys.OFFER_ID) + " from " + obj.getString(JsonKeys.OFFER_AUTHOR) + obj.getString(JsonKeys.OFFER_REVIEW));
         String timestamp = obj.getString(JsonKeys.OFFER_SENDING_REVIEW_TIMESTAMP);
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -43,6 +43,7 @@ public class SendFilledInReview extends OneShotBehaviour {
             ACLMessage reply;
             String replyContent;
             JSONObject json = new JSONObject();
+            json.put(JsonKeys.OFFER_ID, obj.getInt(JsonKeys.OFFER_ID));
             json.put(JsonKeys.OFFER_REVIEW, "4");
             json.put(JsonKeys.OFFER_AUTHOR, obj.getString(JsonKeys.OFFER_AUTHOR));
 

@@ -57,7 +57,7 @@ public class WaitForProposal extends Behaviour {
 //            Scanner scanner = new Scanner(System.in);
 //            System.out.println("\t\t wybierz OK, RESIGN lub CFP");
 //            String choice = scanner.next();
-            String choice = "RESIGN";
+            String choice = "OK";
             switch(choice) {
                 case "OK":
                     receiver.addBehaviour(new SendProposalResponse(receiver, messageProposal.getSender(), offerID, ReceiverDecision.OK));

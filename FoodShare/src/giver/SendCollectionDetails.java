@@ -25,8 +25,8 @@ public class SendCollectionDetails extends OneShotBehaviour {
         JSONObject content = new JSONObject();
         content.put(JsonKeys.OFFER_ID, offerID);
         content.put(JsonKeys.OFFER_RECEIPT_PLACE, "miejsce A");
-        content.put(JsonKeys.OFFER_RECEIPT_DATE, "20.01.2022 05:00:00 PM");
-        content.put(JsonKeys.OFFER_CHOSEN_RECEIVER, receiverID.toString());
+        content.put(JsonKeys.OFFER_RECEIPT_DATE, "2022-02-10T12:30");
+        content.put(JsonKeys.OFFER_CHOSEN_RECEIVER, receiverID.getLocalName());
 
         // przygotowanie wiadomości i wysłanie jej do słupa ogłoszeniowego
         ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);

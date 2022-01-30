@@ -18,12 +18,11 @@ public class SendOffer extends OneShotBehaviour {
     @Override
     public void action() {
         // przygotowanie oferty
-        //TODO
         JSONObject content = new JSONObject();
         content.put(JsonKeys.OFFER_NAME, "ser");
         content.put(JsonKeys.OFFER_ITEM_STATUS, ItemStatus.FRESH);
         content.put(JsonKeys.OFFER_BEST_BEFORE_DATE, "02-02-2022");
-        content.put(JsonKeys.OFFER_DESCRIPTION, "Przykładowy opis");
+        content.put(JsonKeys.OFFER_DESCRIPTION, "Ser Gouda");
 
         System.out.println(giver.getAID().getName() + " zaraz wysle wiadomosc do slupa");
         // przygotowanie wiadomości i wysłanie jej do słupa ogłoszeniowego

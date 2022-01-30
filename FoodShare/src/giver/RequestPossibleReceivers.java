@@ -18,7 +18,7 @@ public class RequestPossibleReceivers extends OneShotBehaviour {
     public void action() {
 
         JSONObject jsonContent = new JSONObject();
-        jsonContent.put(JsonKeys.OFFER_ID, "2345");
+        jsonContent.put(JsonKeys.OFFER_ID, "1357");
         String content = jsonContent.toString();
 
         System.out.println(giver.getAID().getName() + " zaraz wysle prosbe o listę chętnych");

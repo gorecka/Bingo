@@ -4,6 +4,7 @@ import advertisingColumn.data.ItemStatus;
 import advertisingColumn.data.Offer;
 import advertisingColumn.data.OfferStatus;
 import advertisingColumn.data.User;
+import jade.core.AID;
 import jade.core.Agent;
 import org.json.JSONObject;
 
@@ -21,9 +22,9 @@ public class AdvertisingColumnAgent extends Agent {
     protected void setup() {
         System.out.println("Cześć, tu " + getAID().getName() + " !");
         addBehaviour(new WaitForRequest(this));
-        //addBehaviour(new SendReviewForm(this, new AID("R1", AID.ISLOCALNAME), new AID("W1", AID.ISLOCALNAME).getName(), "Example offer"));
+        addBehaviour(new SendReviewForm(this, 1357)); // 60
         addUsers();
-        addOffers();
+//        addOffers();
     }
 
     protected void takeDown() {
@@ -32,14 +33,11 @@ public class AdvertisingColumnAgent extends Agent {
 
     protected List<Offer> getActiveOffers() {
         List<Offer> activeOffers = new ArrayList<>();
-        // TODO: Docelowo pętlę for odkomentować, a usunąć linię 36 i 37
-//        for (Offer o : offers) {
-//            if(o.getOfferStatus() != OfferStatus.WAITING_FOR_GIVER) {
-//                activeOffers.add(o);
-//            }
-//        }
-        Offer offer1 = new Offer(1, "name", "description", OfferStatus.OPEN, new Date(), new User("user1"), ItemStatus.FRESH);
-        activeOffers.add(offer1);
+        for (Offer o : offers) {
+            if(o.getOfferStatus() == OfferStatus.OPEN) {
+                activeOffers.add(o);
+            }
+        }
         return activeOffers;
     }
 
@@ -88,6 +86,9 @@ public class AdvertisingColumnAgent extends Agent {
 
         User user2 = new User("user2");
         users.add(user2);
+
+        User receiver1 = new User("receiver1");
+        users.add(receiver1);
 
         User suspendedUser = new User("suspendedUser3");
         suspendedUser.setSuspended(true);

@@ -44,7 +44,7 @@ public class WaitForListOfPossibleReceivers extends Behaviour {
                 }
 
 //                giver.addBehaviour(new SendProposal(giver));
-                giver.addBehaviour(new SendProposal(giver, new AID("R1", AID.ISLOCALNAME), 1));
+//                giver.addBehaviour(new SendProposal(giver, new AID("R1", AID.ISLOCALNAME), 1));
             } else if (performative == ACLMessage.REFUSE) {
                 System.out.println("Wystąpił błąd w wyniku którego nie udało się pobrać listy chętnych");
             }

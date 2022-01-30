@@ -7,11 +7,14 @@ public class ReceiverAgent extends Agent {
 
         System.out.println("Cześć, tu " + getAID().getName() + " !");
         addBehaviour(new WaitForResult(this));
-//        addBehaviour(new RequestAllPublishedOffers(this));
-//        addBehaviour(new WaitForProposal(this));
-//        addBehaviour(new SignUpForOffer(this, "2345"));
-        addBehaviour(new ConfirmReceipt(this, "2345"));
 //        addBehaviour(new WaitForReviewForm(this));
+//        addBehaviour(new WaitForProposal(this));
+
+        addBehaviour(new RequestAllPublishedOffers(this)); // 10
+        addBehaviour(new SignUpForOffer(this, "1357")); // 20
+        addBehaviour(new ConfirmReceipt(this, "1357")); // 50
+
+
 //        addBehaviour(new ResignFromOffer(this , "12344"));
     }
 

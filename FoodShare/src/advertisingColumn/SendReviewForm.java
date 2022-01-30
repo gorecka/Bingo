@@ -5,6 +5,7 @@ import communicationConstants.JsonKeys;
 import communicationConstants.OntologyNames;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.WakerBehaviour;
 import jade.lang.acl.ACLMessage;
 import org.json.JSONObject;
 
@@ -21,14 +22,15 @@ public class SendReviewForm extends OneShotBehaviour {
     SendReviewForm(AdvertisingColumnAgent agent, int id){
         advertisingColumn = agent;
         offerId = id;
-        Offer offer = advertisingColumn.getOfferById(offerId);
-        receiverName = new AID(offer.getChosenReceiver().getUsername(), AID.ISLOCALNAME);
-        giverName = offer.getAuthor().getUsername();
-        offerName = offer.getName();
     }
 
     @Override
     public void action() {
+        Offer offer = advertisingColumn.getOfferById(offerId);
+        receiverName = new AID(offer.getChosenReceiver().getUsername(), AID.ISLOCALNAME);
+        giverName = offer.getAuthor().getUsername();
+        offerName = offer.getName();
+
         String content;
         JSONObject json = new JSONObject();
         json.put(JsonKeys.OFFER_NAME, offerName);
@@ -40,7 +42,7 @@ public class SendReviewForm extends OneShotBehaviour {
 
         content = json.toString();
 
-        System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle ankietę do " + receiverName);
+        System.out.println(advertisingColumn.getAID().getName() + " zaraz wysle ankietę do " + receiverName.getName());
         // przygotowanie ankiety i wysłanie do obiorcy jedzenia
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
         msg.addReceiver(receiverName);

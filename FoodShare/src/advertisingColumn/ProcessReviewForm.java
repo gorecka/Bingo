@@ -27,7 +27,7 @@ public class ProcessReviewForm extends OneShotBehaviour {
         JSONObject obj = new JSONObject(content);
         AID giver = new AID(obj.getString(JsonKeys.OFFER_AUTHOR), AID.ISLOCALNAME);
         int score = Integer.parseInt(obj.getString(JsonKeys.OFFER_REVIEW));
-        int offerId = Integer.parseInt(obj.getString(JsonKeys.OFFER_ID));
+        int offerId = obj.getInt(JsonKeys.OFFER_ID);
         Offer offer = advertisingColumn.getOfferById(offerId);
 
         String authorName = offer.getAuthor().getUsername();
